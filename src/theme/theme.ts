@@ -5,7 +5,7 @@ import { colors } from './colors'
 
 const config: ThemeConfig = {
   initialColorMode: 'light',
-  useSystemColorMode: true
+  useSystemColorMode: false
 }
 
 const theme = extendTheme({ config, fonts, colors })
