@@ -8,6 +8,8 @@ const makeStore = () =>
     reducer: {
       [authSlice.name]: authSlice.reducer
     },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({ serializableCheck: false }),
     devTools: true
   })
 

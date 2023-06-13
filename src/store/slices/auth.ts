@@ -1,8 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { HYDRATE } from 'next-redux-wrapper'
 
+import { getAuth, GoogleAuthProvider } from 'firebase/auth'
+import { app } from '@/utils/firebase'
+
 const initialState = {
+  auth: getAuth(app),
   isLoggedIn: false,
+  provider: new GoogleAuthProvider(),
   currentUser: null
 }
 
@@ -29,5 +34,5 @@ export const authSlice = createSlice({
 })
 
 export const { setLoggedIn, setUser } = authSlice.actions
-export const getAuth = (state) => state.auth
+export const getAuthState = (state) => state.auth
 export default authSlice.reducer

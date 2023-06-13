@@ -11,10 +11,23 @@ import {
   createIcon
 } from '@chakra-ui/react'
 import { Caveat } from 'next/font/google'
+import { useRouter } from 'next/router'
+
+import { getAuthState } from '@/store/slices/auth'
+import Auth from '@/types/auth'
+import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
 
 const caveat = Caveat({ subsets: ['latin'] })
 
 export default function Landing() {
+  const { isLoggedIn }: Auth = useSelector(getAuthState)
+  const router = useRouter()
+
+  useEffect(() => {
+    if (isLoggedIn) router.replace('/home')
+  }, [isLoggedIn])
+
   return (
     <VStack bg="light.bg" align="center" minH="100vh">
       <Namebar type="light" />

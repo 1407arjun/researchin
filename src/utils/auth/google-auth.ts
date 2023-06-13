@@ -1,14 +1,4 @@
-import {
-  getAuth,
-  signInWithRedirect,
-  GoogleAuthProvider,
-  getRedirectResult
-} from 'firebase/auth'
+import { getAuth, GoogleAuthProvider } from 'firebase/auth'
 import { app } from '../firebase'
 
-const auth = getAuth(app)
-const provider = new GoogleAuthProvider()
-
-export async function signin() {
-  signInWithRedirect(auth, provider)
-}
+export const auth = getAuth(app)
