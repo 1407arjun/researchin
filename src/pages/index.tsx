@@ -1,4 +1,6 @@
+import Footer from '@/components/Footer'
 import Head from '@/components/Head'
+import Navbar from '@/components/Navbar'
 import {
   Box,
   Heading,
@@ -13,11 +15,14 @@ import { Caveat } from 'next/font/google'
 
 const caveat = Caveat({ subsets: ['latin'] })
 
-export default function Home() {
+export default function Landing() {
   return (
-    <Center minH="100vh" bg="dark.bg">
+    <VStack bg="dark.bg" align="center" minH="100vh">
+      <Navbar />
       <Head />
       <VStack
+        flex={1}
+        justify="center"
         textAlign="center"
         spacing={[8, null, 12]}
         p={[8, null, 12]}
@@ -74,7 +79,8 @@ export default function Home() {
           </Box>
         </VStack>
       </VStack>
-    </Center>
+      <Footer />
+    </VStack>
   )
 }
 

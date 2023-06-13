@@ -15,12 +15,12 @@ const PageHead = () => {
 
       <title>{title}</title>
       <meta name="description" content={desc} />
-      <link rel="icon" href="/favicon.ico" />
+      <link rel="icon" href="/logo.png" />
 
       <meta property="og:title" content={title} />
       <meta property="og:type" content="website" />
       <meta property="og:description" content={desc} />
-      <meta property="og:image" content={`${endpoint}/ogicon.png`} />
+      <meta property="og:image" content={`${endpoint}/logo.png`} />
       <meta property="og:url" content={endpoint} />
       <meta property="og:site_name" content={siteName} />
 
@@ -30,7 +30,7 @@ const PageHead = () => {
       <meta property="twitter:url" content={endpoint} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={desc} />
-      <meta name="twitter:image" content={`${endpoint}/ogicon.png`} />
+      <meta name="twitter:image" content={`${endpoint}/logo.png`} />
     </Head>
   )
 }
