@@ -1,10 +1,9 @@
 import Footer from '@/components/Footer'
 import Head from '@/components/Head'
-import Navbar from '@/components/Navbar'
+import Namebar from '@/components/Namebar'
 import {
   Box,
   Heading,
-  Center,
   Text,
   Button,
   VStack,
@@ -18,7 +17,7 @@ const caveat = Caveat({ subsets: ['latin'] })
 export default function Landing() {
   return (
     <VStack bg="light.bg" align="center" minH="100vh">
-      <Navbar type="light" />
+      <Namebar type="light" />
       <Head />
       <VStack
         flex={1}

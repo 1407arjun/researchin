@@ -1,6 +1,6 @@
-import Head from 'next/head'
+import NextHead from 'next/head'
 
-const PageHead = () => {
+const Head = () => {
   const title = 'Page Title'
   const desc = 'Page Desc'
   const endpoint = 'https://example.com'
@@ -9,7 +9,7 @@ const PageHead = () => {
   const twitterHandle = ''
 
   return (
-    <Head>
+    <NextHead>
       <meta charSet="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -31,8 +31,8 @@ const PageHead = () => {
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={desc} />
       <meta name="twitter:image" content={`${endpoint}/logo.png`} />
-    </Head>
+    </NextHead>
   )
 }
 
-export default PageHead
+export default Head

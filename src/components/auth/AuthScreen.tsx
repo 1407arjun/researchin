@@ -1,4 +1,4 @@
-import Navbar from '@/components/Navbar'
+import Namebar from '@/components/Namebar'
 import Head from '@/components/Head'
 import SocialButton from '@/components/auth/SocialButton'
 import {
@@ -19,7 +19,7 @@ export default function AuthScreen({ login }: { login?: boolean }) {
     <Center bg="dark.bg" minH="100vh">
       <VStack align="center" spacing={[8, null, 12]} p={8} maxW="xl" w="full">
         <Box>
-          <Navbar headline />
+          <Namebar headline />
           <Head />
           <Heading size="lg" fontWeight="semibold" color="dark.headline">
             {login ? 'Sign into your account' : 'Create a new account'}
