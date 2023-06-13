@@ -17,8 +17,8 @@ const caveat = Caveat({ subsets: ['latin'] })
 
 export default function Landing() {
   return (
-    <VStack bg="dark.bg" align="center" minH="100vh">
-      <Navbar />
+    <VStack bg="light.bg" align="center" minH="100vh">
+      <Navbar type="light" />
       <Head />
       <VStack
         flex={1}
@@ -31,28 +31,28 @@ export default function Landing() {
           size="3xl"
           fontWeight="semibold"
           lineHeight="110%"
-          color="dark.headline">
+          color="light.headline">
           Research papers in <br />
-          <Text as="span" color="dark.button">
+          <Text as="span" color="light.button">
             your inbox
           </Text>
         </Heading>
-        <Text color="dark.paragraph" fontSize={['md', 'lg', 'xl']}>
+        <Text color="light.paragraph" fontSize={['md', 'lg', 'xl']}>
           Get research papers delivered right into your inbox. Latest
           publications sent collated and sent every week to match your
           interests.
         </Text>
         <VStack align="center" alignSelf="center" position="relative">
           <Button
-            bg="dark.button"
-            color="dark.buttontext"
-            colorScheme="red"
+            bg="light.button"
+            color="light.buttontext"
+            colorScheme="twitter"
             size="lg">
             Get Started
           </Button>
           <Button
             variant="link"
-            color="dark.headline"
+            color="light.headline"
             colorScheme="blue"
             size="sm">
             Learn more
@@ -60,14 +60,14 @@ export default function Landing() {
           <Box>
             <Icon
               as={Arrow}
-              color="dark.headline"
+              color="light.headline"
               w={71}
               position="absolute"
               right={-71}
               top="10px"
             />
             <Text
-              color="dark.headline"
+              color="light.headline"
               fontSize="xl"
               fontFamily={caveat.style.fontFamily}
               position="absolute"
