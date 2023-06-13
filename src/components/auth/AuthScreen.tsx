@@ -13,6 +13,7 @@ import {
 import { FaFacebook } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
 import Footer from '@/components/Footer'
+import { signin } from '@/utils/auth/google-auth'
 
 export default function AuthScreen({ login }: { login?: boolean }) {
   return (
@@ -38,6 +39,7 @@ export default function AuthScreen({ login }: { login?: boolean }) {
               label="Google"
               variant="outline"
               login={login}
+              onClick={signin}
             />
             <Text align="center" pt={6} color="dark.cardtext">
               {login ? "Don't have an account? " : 'Already have an account? '}

@@ -1,12 +1,13 @@
-import { Button, Center, Text } from '@chakra-ui/react'
+import { Button, ButtonProps, Center, Text } from '@chakra-ui/react'
 
 export default function SocialButton({
   icon,
   label,
   colorScheme,
   variant,
-  login
-}: {
+  login,
+  ...props
+}: ButtonProps & {
   icon: React.ReactElement
   label: string
   colorScheme?: string
@@ -17,6 +18,7 @@ export default function SocialButton({
     <Button
       w="full"
       maxW="md"
+      {...props}
       variant={variant}
       leftIcon={icon}
       colorScheme={colorScheme}>
