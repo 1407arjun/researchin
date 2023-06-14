@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { HYDRATE } from 'next-redux-wrapper'
 import { App } from 'realm-web'
+import { Store } from '../store'
 
 const initialState: { app: App | null } = { app: null }
 
@@ -24,5 +25,5 @@ export const appSlice = createSlice({
 })
 
 export const { setApp } = appSlice.actions
-export const getApp = (state) => state.app
+export const getApp = (state: Store) => state.app
 export default appSlice.reducer

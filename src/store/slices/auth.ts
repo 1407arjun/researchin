@@ -1,6 +1,7 @@
 import Auth, { AuthStatus } from '@/types/auth'
 import { createSlice } from '@reduxjs/toolkit'
 import { HYDRATE } from 'next-redux-wrapper'
+import { Store } from '../store'
 
 const initialState: Auth = {
   status: AuthStatus.LOADING,
@@ -30,5 +31,5 @@ export const authSlice = createSlice({
 })
 
 export const { setStatus, setUser } = authSlice.actions
-export const getAuth = (state) => state.auth
+export const getAuth = (state: Store) => state.auth
 export default authSlice.reducer

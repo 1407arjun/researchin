@@ -4,15 +4,15 @@ import { createWrapper } from 'next-redux-wrapper'
 import { authSlice } from './slices/auth'
 import { appSlice } from './slices/app'
 
-const makeStore = () =>
-  configureStore({
-    reducer: {
-      [authSlice.name]: authSlice.reducer,
-      [appSlice.name]: appSlice.reducer
-    },
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware({ serializableCheck: false }),
-    devTools: true
-  })
+const store = configureStore({
+  reducer: {
+    [authSlice.name]: authSlice.reducer,
+    [appSlice.name]: appSlice.reducer
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }),
+  devTools: true
+})
 
-export const wrapper = createWrapper(makeStore)
+export const wrapper = createWrapper(() => store)
+export type Store = ReturnType<typeof store.getState>
