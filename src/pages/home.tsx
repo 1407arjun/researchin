@@ -4,14 +4,24 @@ import Navbar from '@/components/Navbar'
 import { VStack } from '@chakra-ui/react'
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 
-import { useEffect } from 'react'
 import { useApp } from '@/hooks/useApp'
+import Loading from '@/components/auth/Loading'
+import useAuth from '@/hooks/useAuth'
+import { AuthStatus } from '@/types/auth'
+import { useRouter } from 'next/router'
 
 export default function Home() {
-  const app = useApp()
-  useEffect(() => {
-    console.log(app, app?.currentUser)
-  }, [app, app?.currentUser])
+  const { status } = useAuth()
+  const router = useRouter()
+
+  switch (status) {
+    case AuthStatus.LOADING:
+      return <Loading />
+    case AuthStatus.UNAUTHENTICATED:
+      router.push('/login')
+      break
+  }
+
   return (
     <VStack bg="light.bg" align="center" minH="100vh" spacing={4}>
       <Navbar type="light" />
