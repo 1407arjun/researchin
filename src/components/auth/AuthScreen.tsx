@@ -19,16 +19,19 @@ import { getAuthState, setLoggedIn, setUser } from '@/store/slices/auth'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import { useApp } from '@/hooks/useApp'
+import { Credentials } from 'realm-web'
 
 export default function AuthScreen({ login }: { login?: boolean }) {
+  const app = useApp()
   const { isLoggedIn }: Auth = useSelector(getAuthState)
   const router = useRouter()
 
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (isLoggedIn) router.replace('/home')
-  }, [isLoggedIn])
+    if (app && app.currentUser) router.replace('/home')
+  }, [app, app?.currentUser])
 
   return (
     <Center bg="dark.bg" minH="100vh">
@@ -53,6 +56,20 @@ export default function AuthScreen({ login }: { login?: boolean }) {
               label="Google"
               variant="outline"
               login={login}
+              onClick={async () => {
+                if (app) {
+                  const user = await app.logIn(
+                    Credentials.google({
+                      redirectUrl: 'http://localhost:3000/auth/google'
+                    })
+                  )
+                  console.log(user)
+                  if (user) {
+                    dispatch(setLoggedIn(user ? true : false))
+                    dispatch(setUser(user))
+                  }
+                }
+              }}
             />
             <Text align="center" pt={6} color="dark.cardtext">
               {login ? "Don't have an account? " : 'Already have an account? '}

@@ -9,14 +9,16 @@ import { getAuthState } from '@/store/slices/auth'
 import { useSelector } from 'react-redux'
 import Auth from '@/types/auth'
 import { useEffect } from 'react'
+import { useApp } from '@/hooks/useApp'
 
 export default function Home() {
+  const app = useApp()
   const { isLoggedIn }: Auth = useSelector(getAuthState)
   const router = useRouter()
 
   useEffect(() => {
-    if (!isLoggedIn) router.replace('/login')
-  }, [isLoggedIn])
+    if (app && !app.currentUser) router.replace('/login')
+  }, [app, app?.currentUser])
 
   return (
     <VStack bg="light.bg" align="center" minH="100vh" spacing={4}>
