@@ -1,20 +1,32 @@
 import { Image } from '@chakra-ui/next-js'
-import { HStack, Spacer, Button } from '@chakra-ui/react'
+import { HStack, Spacer, Avatar } from '@chakra-ui/react'
+import { InputGroup, InputLeftElement, Input } from '@chakra-ui/react'
 import Logo from '@/assets/images/logo.svg'
+import { FaSearch } from 'react-icons/fa'
+import { useApp } from '@/hooks/useApp'
 
-export default function Navbar() {
+export default function Navbar({ type }: { type?: 'light' | 'dark' }) {
+  const app = useApp()
+
+  if (!type) type = 'dark'
+
   return (
-    <HStack px={8} py={4} justify={['center', null, 'space-between']} w="100%">
-      <Image w={12} src={Logo} alt="Researchin Logo" />
-      <Spacer display={['none', null, 'inherit']} />
-      <Button
-        variant="outline"
-        display={['none', null, 'inherit']}
-        borderColor="dark.button"
-        color="dark.button"
-        colorScheme="red">
-        Coming soon
-      </Button>
+    <HStack px={[8, null, 12]} py={4} justify="center" w="full">
+      <Image w={10} src={Logo} alt="Researchin Logo" />
+      <InputGroup display={['none', null, 'inherit']}>
+        <InputLeftElement pointerEvents="none">
+          <FaSearch color="#5f6c7b" />
+        </InputLeftElement>
+        <Input w="33%" placeholder="Search" />
+      </InputGroup>
+      <Spacer />
+      <Avatar
+        size="md"
+        name="Dan Abrahmov"
+        src="https://bit.ly/dan-abramov"
+        onClick={() => app?.currentUser?.logOut()}
+      />
+      )
     </HStack>
   )
 }

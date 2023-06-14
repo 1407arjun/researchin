@@ -6,7 +6,13 @@ import heading from '@/assets/fonts/heading'
 import body from '@/assets/fonts/body'
 import theme from '@/theme/theme'
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+import { Provider } from 'react-redux'
+import { wrapper } from '@/store/store'
+
+export default function MyApp({ Component, ...appProps }: AppProps) {
+  const { store, props } = wrapper.useWrappedStore(appProps)
+  const { pageProps } = props
+
   return (
     <>
       <style jsx global>
@@ -18,7 +24,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         `}
       </style>
       <ChakraProvider theme={theme}>
-        <Component {...pageProps} />
+        <Provider store={store}>
+          <Component {...pageProps} />
+        </Provider>
       </ChakraProvider>
     </>
   )
