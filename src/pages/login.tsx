@@ -65,7 +65,8 @@ export default function Login() {
                     setDisabled(true)
                     await app.logIn(
                       Credentials.google({
-                        redirectUrl: 'http://localhost:3000/auth/google'
+                        redirectUrl: `${process.env
+                          .NEXT_PUBLIC_BASE_URL!}/auth/google`
                       })
                     )
                   } catch (e) {
