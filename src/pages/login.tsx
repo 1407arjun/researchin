@@ -14,15 +14,27 @@ import { FaFacebook } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
 import Footer from '@/components/Footer'
 
-import { setLoggedIn, setUser } from '@/store/slices/auth'
-import { useDispatch } from 'react-redux'
-import { useApp } from '@/hooks/useApp'
 import { Credentials } from 'realm-web'
+import useAuth from '@/hooks/useAuth'
+import { useApp } from '@/hooks/useApp'
+import Loading from '@/components/auth/Loading'
+import { AuthStatus } from '@/types/auth'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
 
 export default function Login() {
   const app = useApp()
+  const { status } = useAuth()
+  const router = useRouter()
+  const [disabled, setDisabled] = useState(false)
 
-  const dispatch = useDispatch()
+  switch (status) {
+    case AuthStatus.LOADING:
+      return <Loading />
+    case AuthStatus.AUTHENTICATED:
+      router.replace('/home')
+      break
+  }
 
   return (
     <Center bg="dark.bg" minH="100vh">
@@ -40,22 +52,27 @@ export default function Login() {
               icon={<FaFacebook />}
               label="Facebook"
               colorScheme="facebook"
+              isDisabled={disabled}
             />
             <SocialButton
               icon={<FcGoogle />}
               label="Google"
               variant="outline"
+              isDisabled={disabled}
               onClick={async () => {
                 if (app) {
-                  const user = await app.logIn(
-                    Credentials.google({
-                      redirectUrl: 'http://localhost:3000/auth/google'
-                    })
-                  )
-                  console.log(user)
-                  if (user) {
-                    dispatch(setLoggedIn(user ? true : false))
-                    dispatch(setUser(user))
+                  try {
+                    setDisabled(true)
+                    await app.logIn(
+                      Credentials.google({
+                        redirectUrl: `${process.env
+                          .NEXT_PUBLIC_BASE_URL!}/auth/google`
+                      })
+                    )
+                  } catch (e) {
+                    alert(e)
+                  } finally {
+                    setDisabled(false)
                   }
                 }
               }}

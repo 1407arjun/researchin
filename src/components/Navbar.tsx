@@ -3,10 +3,15 @@ import { HStack, Spacer, Avatar } from '@chakra-ui/react'
 import { InputGroup, InputLeftElement, Input } from '@chakra-ui/react'
 import Logo from '@/assets/images/logo.svg'
 import { FaSearch } from 'react-icons/fa'
+
+import useAuth from '@/hooks/useAuth'
+import { useRouter } from 'next/router'
 import { useApp } from '@/hooks/useApp'
 
 export default function Navbar({ type }: { type?: 'light' | 'dark' }) {
   const app = useApp()
+  const { user } = useAuth()
+  const router = useRouter()
 
   if (!type) type = 'dark'
 
@@ -22,9 +27,13 @@ export default function Navbar({ type }: { type?: 'light' | 'dark' }) {
       <Spacer />
       <Avatar
         size="md"
-        name="Dan Abrahmov"
-        src="https://bit.ly/dan-abramov"
-        onClick={() => app?.currentUser?.logOut()}
+        name={user?.profile.name}
+        src={user?.profile.pictureUrl}
+        cursor="pointer"
+        onClick={async () => {
+          await user?.logOut()
+          router.push('/')
+        }}
       />
       )
     </HStack>

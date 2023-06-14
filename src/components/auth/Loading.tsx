@@ -1,0 +1,15 @@
+import { Center, Spinner } from '@chakra-ui/react'
+
+export default function Loading() {
+  return (
+    <Center bg="light.bg" minH="100vh" p={8}>
+      <Spinner
+        thickness="4px"
+        speed="0.65s"
+        emptyColor="light.headline"
+        color="dark.bg"
+        size="xl"
+      />
+    </Center>
+  )
+}
