@@ -7,8 +7,11 @@ export default function Signout() {
   const app = useApp()
   const router = useRouter()
   useEffect(() => {
-    if (app && app.currentUser) app.currentUser.logOut()
-    router.replace('/')
+    async function logout() {
+      if (app && app.currentUser) await app.currentUser.logOut()
+      router.replace('/')
+    }
+    logout()
   }, [])
   return <Loading />
 }
