@@ -34,7 +34,7 @@ export default function Landing() {
   return (
     <VStack bg="light.bg" align="center" minH="100vh">
       <Namebar type="light" />
-      <Head />
+      <Head title="Researchin" />
       <VStack
         flex={1}
         justify="center"

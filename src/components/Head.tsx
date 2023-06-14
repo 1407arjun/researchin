@@ -1,7 +1,6 @@
 import NextHead from 'next/head'
 
-const Head = () => {
-  const title = 'Page Title'
+const Head = ({ title }: { title: string }) => {
   const desc = 'Page Desc'
   const endpoint = 'https://example.com'
   const domain = 'example.com'

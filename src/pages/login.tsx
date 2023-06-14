@@ -41,7 +41,7 @@ export default function Login() {
       <VStack align="center" spacing={[8, null, 12]} p={8} maxW="xl" w="full">
         <Box>
           <Namebar headline />
-          <Head />
+          <Head title="Login" />
           <Heading size="lg" fontWeight="semibold" color="dark.headline">
             Sign in/Sign up
           </Heading>

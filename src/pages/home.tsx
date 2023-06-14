@@ -24,7 +24,7 @@ export default function Home() {
   return (
     <VStack bg="light.bg" align="center" minH="100vh" spacing={4}>
       <Navbar type="light" />
-      <Head />
+      <Head title="Home" />
       <Tabs
         w="100%"
         isFitted
