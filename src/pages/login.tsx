@@ -14,16 +14,18 @@ import { FaFacebook } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
 import Footer from '@/components/Footer'
 
-import { setLoggedIn, setUser } from '@/store/slices/auth'
-import { useDispatch } from 'react-redux'
-import { useApp } from '@/hooks/useApp'
 import { Credentials } from 'realm-web'
+import useAuth from '@/hooks/useAuth'
+import { useEffect } from 'react'
+import { useApp } from '@/hooks/useApp'
 
 export default function Login() {
   const app = useApp()
+  const { status, user } = useAuth()
 
-  const dispatch = useDispatch()
-
+  useEffect(() => {
+    console.log(status, user)
+  }, [status, user])
   return (
     <Center bg="dark.bg" minH="100vh">
       <VStack align="center" spacing={[8, null, 12]} p={8} maxW="xl" w="full">
@@ -52,11 +54,6 @@ export default function Login() {
                       redirectUrl: 'http://localhost:3000/auth/google'
                     })
                   )
-                  console.log(user)
-                  if (user) {
-                    dispatch(setLoggedIn(user ? true : false))
-                    dispatch(setUser(user))
-                  }
                 }
               }}
             />

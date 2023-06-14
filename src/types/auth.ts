@@ -1,6 +1,14 @@
+import { User } from 'realm-web'
+
+export enum AuthStatus {
+  LOADING,
+  UNAUTHENTICATED,
+  AUTHENTICATED
+}
+
 interface Auth {
-  isLoggedIn: boolean
-  currentUser: string
+  status: AuthStatus
+  user: User | null
 }
 
 export default Auth

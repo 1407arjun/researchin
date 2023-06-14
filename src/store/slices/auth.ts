@@ -1,20 +1,21 @@
+import Auth, { AuthStatus } from '@/types/auth'
 import { createSlice } from '@reduxjs/toolkit'
 import { HYDRATE } from 'next-redux-wrapper'
 
-const initialState = {
-  isLoggedIn: false,
-  currentUser: null
+const initialState: Auth = {
+  status: AuthStatus.LOADING,
+  user: null
 }
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setLoggedIn: (state, action) => {
-      state.isLoggedIn = action.payload
+    setStatus: (state, action) => {
+      state.status = action.payload
     },
     setUser: (state, action) => {
-      state.currentUser = action.payload
+      state.user = action.payload
     },
     extraReducers: {
       //@ts-ignore
@@ -28,6 +29,6 @@ export const authSlice = createSlice({
   }
 })
 
-export const { setLoggedIn, setUser } = authSlice.actions
-export const getAuthState = (state) => state.auth
+export const { setStatus, setUser } = authSlice.actions
+export const getAuth = (state) => state.auth
 export default authSlice.reducer
