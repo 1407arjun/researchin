@@ -14,24 +14,15 @@ import { FaFacebook } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
 import Footer from '@/components/Footer'
 
-import Auth from '@/types/auth'
-import { getAuthState, setLoggedIn, setUser } from '@/store/slices/auth'
-import { useDispatch, useSelector } from 'react-redux'
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { setLoggedIn, setUser } from '@/store/slices/auth'
+import { useDispatch } from 'react-redux'
 import { useApp } from '@/hooks/useApp'
-import { Credentials } from 'realm-web'
+import { App, Credentials } from 'realm-web'
 
 export default function AuthScreen({ login }: { login?: boolean }) {
   const app = useApp()
-  const { isLoggedIn }: Auth = useSelector(getAuthState)
-  const router = useRouter()
 
   const dispatch = useDispatch()
-
-  useEffect(() => {
-    if (app && app.currentUser) router.replace('/home')
-  }, [app, app?.currentUser])
 
   return (
     <Center bg="dark.bg" minH="100vh">

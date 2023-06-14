@@ -3,23 +3,22 @@ import Head from '@/components/Head'
 import Navbar from '@/components/Navbar'
 import { VStack } from '@chakra-ui/react'
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
-import { useRouter } from 'next/router'
 
-import { getAuthState } from '@/store/slices/auth'
-import { useSelector } from 'react-redux'
-import Auth from '@/types/auth'
-import { useEffect } from 'react'
-import { useApp } from '@/hooks/useApp'
+import getAuthStatus from '@/utils/auth/getAuthStatus'
+
+export function getServerSideProps() {
+  const session = getAuthStatus()
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login'
+      }
+    }
+  }
+  return { props: {} }
+}
 
 export default function Home() {
-  const app = useApp()
-  const { isLoggedIn }: Auth = useSelector(getAuthState)
-  const router = useRouter()
-
-  useEffect(() => {
-    if (app && !app.currentUser) router.replace('/login')
-  }, [app, app?.currentUser])
-
   return (
     <VStack bg="light.bg" align="center" minH="100vh" spacing={4}>
       <Navbar type="light" />

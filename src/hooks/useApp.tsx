@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { getApp } from 'realm-web'
+import { App, getApp } from 'realm-web'
 
 export function useApp() {
-  const [app, setApp] = useState(null)
+  const [app, setApp] = useState<App | null>(null)
   useEffect(() => {
     //@ts-ignore
     setApp(getApp(process.env.NEXT_PUBLIC_APP_ID!))

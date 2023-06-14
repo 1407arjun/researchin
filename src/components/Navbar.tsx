@@ -3,8 +3,11 @@ import { HStack, Spacer, Avatar } from '@chakra-ui/react'
 import { InputGroup, InputLeftElement, Input } from '@chakra-ui/react'
 import Logo from '@/assets/images/logo.svg'
 import { FaSearch } from 'react-icons/fa'
+import { useApp } from '@/hooks/useApp'
 
 export default function Navbar({ type }: { type?: 'light' | 'dark' }) {
+  const app = useApp()
+
   if (!type) type = 'dark'
 
   return (
@@ -17,7 +20,13 @@ export default function Navbar({ type }: { type?: 'light' | 'dark' }) {
         <Input w="33%" placeholder="Search" />
       </InputGroup>
       <Spacer />
-      <Avatar size="md" name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />)
+      <Avatar
+        size="md"
+        name="Dan Abrahmov"
+        src="https://bit.ly/dan-abramov"
+        onClick={() => app?.currentUser?.logOut()}
+      />
+      )
     </HStack>
   )
 }

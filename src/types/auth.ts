@@ -1,8 +1,6 @@
-import { User } from 'firebase/auth'
-
 interface Auth {
   isLoggedIn: boolean
-  currentUser: User | null
+  currentUser: string
 }
 
 export default Auth
