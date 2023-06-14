@@ -5,14 +5,12 @@ export default function SocialButton({
   label,
   colorScheme,
   variant,
-  login,
   ...props
 }: ButtonProps & {
   icon: React.ReactElement
   label: string
   colorScheme?: string
   variant?: string
-  login?: boolean
 }) {
   return (
     <Button
@@ -23,9 +21,7 @@ export default function SocialButton({
       leftIcon={icon}
       colorScheme={colorScheme}>
       <Center>
-        <Text>
-          Sign {login ? 'in' : 'up'} with {label}
-        </Text>
+        <Text>Sign in with {label}</Text>
       </Center>
     </Button>
   )
