@@ -1,11 +1,14 @@
-import { useEffect, useState } from 'react'
-import { App, getApp } from 'realm-web'
+import { getApp, setApp } from '@/store/slices/app'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { App, getApp as getRealmApp } from 'realm-web'
 
-export function useApp() {
-  const [app, setApp] = useState<App | null>(null)
+export function useApp(): App | null {
+  const dispatch = useDispatch()
+
   useEffect(() => {
-    //@ts-ignore
-    setApp(getApp(process.env.NEXT_PUBLIC_APP_ID!))
+    dispatch(setApp(getRealmApp(process.env.NEXT_PUBLIC_APP_ID!)))
   }, [])
-  return app
+
+  return useSelector(getApp).app
 }

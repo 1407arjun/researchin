@@ -3,10 +3,9 @@ import { useApp } from './useApp'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAuth, setStatus, setUser } from '@/store/slices/auth'
-import { getApp } from 'realm-web'
 
 export default function useAuth(): Auth {
-  const app = getApp(process.env.NEXT_PUBLIC_APP_ID!)
+  const app = useApp()
   const dispatch = useDispatch()
   const { user } = useSelector(getAuth)
 

@@ -6,8 +6,10 @@ import { FaSearch } from 'react-icons/fa'
 
 import useAuth from '@/hooks/useAuth'
 import { useRouter } from 'next/router'
+import { useApp } from '@/hooks/useApp'
 
 export default function Navbar({ type }: { type?: 'light' | 'dark' }) {
+  const app = useApp()
   const { user } = useAuth()
   const router = useRouter()
 
