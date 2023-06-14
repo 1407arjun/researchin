@@ -1,15 +1,17 @@
 import Auth, { AuthStatus } from '@/types/auth'
 import { useApp } from './useApp'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAuth, setStatus, setUser } from '@/store/slices/auth'
+import { getApp } from 'realm-web'
 
 export default function useAuth(): Auth {
-  const app = useApp()
-  const { status, user } = useSelector(getAuth)
+  const app = getApp(process.env.NEXT_PUBLIC_APP_ID!)
   const dispatch = useDispatch()
+  const { user } = useSelector(getAuth)
 
   useEffect(() => {
+    console.log(app, app?.currentUser)
     if (app) {
       if (app.currentUser) {
         dispatch(setStatus(AuthStatus.AUTHENTICATED))
@@ -22,7 +24,7 @@ export default function useAuth(): Auth {
       dispatch(setStatus(AuthStatus.LOADING))
       dispatch(setUser(null))
     }
-  }, [app, app?.currentUser])
+  }, [app, app?.currentUser, user])
 
-  return { status, user }
+  return useSelector(getAuth)
 }

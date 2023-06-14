@@ -5,9 +5,11 @@ import Logo from '@/assets/images/logo.svg'
 import { FaSearch } from 'react-icons/fa'
 
 import useAuth from '@/hooks/useAuth'
+import { useRouter } from 'next/router'
 
 export default function Navbar({ type }: { type?: 'light' | 'dark' }) {
   const { user } = useAuth()
+  const router = useRouter()
 
   if (!type) type = 'dark'
 
@@ -28,6 +30,7 @@ export default function Navbar({ type }: { type?: 'light' | 'dark' }) {
         cursor="pointer"
         onClick={async () => {
           await user?.logOut()
+          router.push('/')
         }}
       />
       )

@@ -27,7 +27,7 @@ export default function Landing() {
     case AuthStatus.LOADING:
       return <Loading />
     case AuthStatus.AUTHENTICATED:
-      router.push('/home')
+      router.replace('/home')
       break
   }
 

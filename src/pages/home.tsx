@@ -4,7 +4,6 @@ import Navbar from '@/components/Navbar'
 import { VStack } from '@chakra-ui/react'
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 
-import { useApp } from '@/hooks/useApp'
 import Loading from '@/components/auth/Loading'
 import useAuth from '@/hooks/useAuth'
 import { AuthStatus } from '@/types/auth'
@@ -18,7 +17,7 @@ export default function Home() {
     case AuthStatus.LOADING:
       return <Loading />
     case AuthStatus.UNAUTHENTICATED:
-      router.push('/login')
+      router.replace('/login')
       break
   }
 

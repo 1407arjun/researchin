@@ -20,20 +20,19 @@ import { useApp } from '@/hooks/useApp'
 import Loading from '@/components/auth/Loading'
 import { AuthStatus } from '@/types/auth'
 import { useRouter } from 'next/router'
-import { useDispatch } from 'react-redux'
-import { setStatus } from '@/store/slices/auth'
+import { useState } from 'react'
 
 export default function Login() {
   const app = useApp()
   const { status } = useAuth()
   const router = useRouter()
-  const dispatch = useDispatch()
+  const [disabled, setDisabled] = useState(false)
 
   switch (status) {
     case AuthStatus.LOADING:
       return <Loading />
     case AuthStatus.AUTHENTICATED:
-      router.push('/home')
+      router.replace('/home')
       break
   }
 
@@ -53,14 +52,17 @@ export default function Login() {
               icon={<FaFacebook />}
               label="Facebook"
               colorScheme="facebook"
+              isDisabled={disabled}
             />
             <SocialButton
               icon={<FcGoogle />}
               label="Google"
               variant="outline"
+              isDisabled={disabled}
               onClick={async () => {
                 if (app) {
                   try {
+                    setDisabled(true)
                     await app.logIn(
                       Credentials.google({
                         redirectUrl: 'http://localhost:3000/auth/google'
@@ -68,6 +70,8 @@ export default function Login() {
                     )
                   } catch (e) {
                     alert(e)
+                  } finally {
+                    setDisabled(false)
                   }
                 }
               }}
