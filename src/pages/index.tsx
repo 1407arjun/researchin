@@ -12,21 +12,7 @@ import {
 } from '@chakra-ui/react'
 import { Caveat } from 'next/font/google'
 
-import getAuthStatus from '@/utils/auth/getAuthStatus'
-
 const caveat = Caveat({ subsets: ['latin'] })
-
-export function getServerSideProps() {
-  const session = getAuthStatus()
-  if (session) {
-    return {
-      redirect: {
-        destination: '/home'
-      }
-    }
-  }
-  return { props: {} }
-}
 
 export default function Landing() {
   return (
