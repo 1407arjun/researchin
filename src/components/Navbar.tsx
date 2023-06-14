@@ -6,15 +6,10 @@ import { FaSearch } from 'react-icons/fa'
 
 import useAuth from '@/hooks/useAuth'
 import { useRouter } from 'next/router'
-import { useDispatch } from 'react-redux'
-import { setApp } from '@/store/slices/app'
-import { useApp } from '@/hooks/useApp'
 
 export default function Navbar({ type }: { type?: 'light' | 'dark' }) {
-  const app = useApp()
   const { user } = useAuth()
   const router = useRouter()
-  const dispatch = useDispatch()
 
   if (!type) type = 'dark'
 
@@ -33,9 +28,8 @@ export default function Navbar({ type }: { type?: 'light' | 'dark' }) {
         name={user?.profile.name}
         src={user?.profile.pictureUrl}
         cursor="pointer"
-        onClick={async () => {
-          await app?.currentUser?.logOut()
-          dispatch(setApp({ ...app }))
+        onClick={() => {
+          router.push('/auth/signout')
         }}
       />
       )
