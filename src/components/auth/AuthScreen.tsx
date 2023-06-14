@@ -18,11 +18,10 @@ import Auth from '@/types/auth'
 import { getAuthState, setLoggedIn, setUser } from '@/store/slices/auth'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
-import { signInWithPopup } from 'firebase/auth'
 import { useEffect } from 'react'
 
 export default function AuthScreen({ login }: { login?: boolean }) {
-  const { auth, provider, isLoggedIn }: Auth = useSelector(getAuthState)
+  const { isLoggedIn }: Auth = useSelector(getAuthState)
   const router = useRouter()
 
   const dispatch = useDispatch()
@@ -54,13 +53,6 @@ export default function AuthScreen({ login }: { login?: boolean }) {
               label="Google"
               variant="outline"
               login={login}
-              onClick={async () => {
-                const result = await signInWithPopup(auth, provider)
-                if (result) {
-                  dispatch(setLoggedIn(result.user ? true : false))
-                  dispatch(setUser(result.user))
-                }
-              }}
             />
             <Text align="center" pt={6} color="dark.cardtext">
               {login ? "Don't have an account? " : 'Already have an account? '}
