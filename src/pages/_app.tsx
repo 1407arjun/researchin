@@ -13,7 +13,9 @@ import { SessionProvider } from 'next-auth/react'
 
 export default function MyApp({ Component, ...appProps }: AppProps) {
   const { store, props } = wrapper.useWrappedStore(appProps)
-  const { session, ...pageProps } = props
+  const {
+    pageProps: { session, ...pageProps }
+  } = props
 
   return (
     <>

@@ -38,7 +38,7 @@ export default function Login() {
               icon={<FcGoogle />}
               label="Google"
               variant="outline"
-              onClick={() => signIn('google', { callbackUrl: '/home' })}
+              onClick={() => signIn('google', { callbackUrl: '/app' })}
             />
             <Text align="center" pt={6} color="dark.cardtext">
               Don&apos;t have an account? Create one by signing in!
