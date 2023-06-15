@@ -9,9 +9,11 @@ import theme from '@/theme/theme'
 import { Provider } from 'react-redux'
 import { wrapper } from '@/store/store'
 
+import { SessionProvider } from 'next-auth/react'
+
 export default function MyApp({ Component, ...appProps }: AppProps) {
   const { store, props } = wrapper.useWrappedStore(appProps)
-  const { pageProps } = props
+  const { session, ...pageProps } = props
 
   return (
     <>
@@ -24,9 +26,11 @@ export default function MyApp({ Component, ...appProps }: AppProps) {
         `}
       </style>
       <ChakraProvider theme={theme}>
-        <Provider store={store}>
-          <Component {...pageProps} />
-        </Provider>
+        <SessionProvider session={session}>
+          <Provider store={store}>
+            <Component {...pageProps} />
+          </Provider>
+        </SessionProvider>
       </ChakraProvider>
     </>
   )

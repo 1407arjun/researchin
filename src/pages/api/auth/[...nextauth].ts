@@ -18,7 +18,7 @@ export const authOptions: AuthOptions = {
   pages: {
     signIn: '/login',
     signOut: '',
-    newUser: '/onboarding'
+    newUser: '/home'
   }
 }
 
