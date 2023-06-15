@@ -1,6 +1,7 @@
 import Footer from '@/components/Footer'
 import Head from '@/components/Head'
 import Namebar from '@/components/Namebar'
+import { Link } from '@chakra-ui/next-js'
 import {
   Box,
   Heading,
@@ -43,6 +44,8 @@ export default function Landing() {
         </Text>
         <VStack align="center" alignSelf="center" position="relative">
           <Button
+            as={Link}
+            href="/auth/login"
             bg="light.button"
             color="light.buttontext"
             colorScheme="twitter"

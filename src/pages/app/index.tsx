@@ -7,6 +7,8 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import { GetServerSidePropsContext } from 'next'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../api/auth/[...nextauth]'
+import Loading from '@/components/auth/Loading'
+import { useSession } from 'next-auth/react'
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const session = await getServerSession(ctx.req, ctx.res, authOptions)
@@ -24,6 +26,10 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 }
 
 export default function Home() {
+  const { status } = useSession()
+
+  if (status === 'loading') return <Loading />
+
   return (
     <VStack bg="light.bg" align="center" minH="100vh" spacing={4}>
       <Navbar type="light" />

@@ -4,9 +4,11 @@ import { InputGroup, InputLeftElement, Input } from '@chakra-ui/react'
 import Logo from '@/assets/images/logo.svg'
 import { FaSearch } from 'react-icons/fa'
 
-import { signOut } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 
 export default function Navbar({ type }: { type?: 'light' | 'dark' }) {
+  const { data: session } = useSession()
+
   if (!type) type = 'dark'
 
   return (
@@ -21,8 +23,8 @@ export default function Navbar({ type }: { type?: 'light' | 'dark' }) {
       <Spacer />
       <Avatar
         size="md"
-        name={''}
-        src={''}
+        name={session?.user?.name!}
+        src={session?.user?.image!}
         cursor="pointer"
         onClick={() => signOut({ callbackUrl: '/' })}
       />

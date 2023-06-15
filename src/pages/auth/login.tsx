@@ -14,10 +14,11 @@ import { FaFacebook } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
 import Footer from '@/components/Footer'
 
-import { signIn } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 import { GetServerSidePropsContext } from 'next'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../api/auth/[...nextauth]'
+import Loading from '@/components/auth/Loading'
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const session = await getServerSession(ctx.req, ctx.res, authOptions)
@@ -35,6 +36,10 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 }
 
 export default function Login() {
+  const { status } = useSession()
+
+  if (status === 'loading') return <Loading />
+
   return (
     <Center bg="dark.bg" minH="100vh">
       <VStack align="center" spacing={[8, null, 12]} p={8} maxW="xl" w="full">
