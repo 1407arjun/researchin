@@ -15,6 +15,24 @@ import { FcGoogle } from 'react-icons/fc'
 import Footer from '@/components/Footer'
 
 import { signIn } from 'next-auth/react'
+import { GetServerSidePropsContext } from 'next'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '../api/auth/[...nextauth]'
+
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+  const session = await getServerSession(ctx.req, ctx.res, authOptions)
+
+  if (session)
+    return {
+      redirect: {
+        destination: '/app'
+      },
+      props: {}
+    }
+  return {
+    props: {}
+  }
+}
 
 export default function Login() {
   return (
