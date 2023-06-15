@@ -3,6 +3,9 @@ import NextAuth, { AuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import { MongoDBAdapter } from '@auth/mongodb-adapter'
 import clientPromise from '@/lib/mongodb'
+import Profile from '@/models/Profile'
+import mongoose from 'mongoose'
+import { profile } from 'console'
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -19,6 +22,15 @@ export const authOptions: AuthOptions = {
     signIn: '/auth/login',
     signOut: '',
     newUser: '/app'
+  },
+  events: {
+    createUser: async ({ user }) => {
+      const profile = new Profile({
+        user: new mongoose.Types.ObjectId(user.id),
+        topics: []
+      })
+      profile.save()
+    }
   }
 }
 
