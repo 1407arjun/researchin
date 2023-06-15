@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
+import Profile from '@/types/profile'
 
-export const profileSchema = new mongoose.Schema({
+export const profileSchema = new mongoose.Schema<Profile>({
   user: {
     type: mongoose.Types.ObjectId,
     ref: 'User'
@@ -9,4 +10,4 @@ export const profileSchema = new mongoose.Schema({
 })
 
 export default mongoose.models.Profile ||
-  mongoose.model('Profile', profileSchema)
+  mongoose.model<Profile>('Profile', profileSchema)
