@@ -14,6 +14,8 @@ import { FaFacebook } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
 import Footer from '@/components/Footer'
 
+import { signIn } from 'next-auth/react'
+
 export default function Login() {
   return (
     <Center bg="dark.bg" minH="100vh">
@@ -36,6 +38,7 @@ export default function Login() {
               icon={<FcGoogle />}
               label="Google"
               variant="outline"
+              onClick={() => signIn('google', { callbackUrl: '/home' })}
             />
             <Text align="center" pt={6} color="dark.cardtext">
               Don&apos;t have an account? Create one by signing in!

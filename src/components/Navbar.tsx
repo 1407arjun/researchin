@@ -4,6 +4,8 @@ import { InputGroup, InputLeftElement, Input } from '@chakra-ui/react'
 import Logo from '@/assets/images/logo.svg'
 import { FaSearch } from 'react-icons/fa'
 
+import { signOut } from 'next-auth/react'
+
 export default function Navbar({ type }: { type?: 'light' | 'dark' }) {
   if (!type) type = 'dark'
 
@@ -17,7 +19,14 @@ export default function Navbar({ type }: { type?: 'light' | 'dark' }) {
         <Input w="33%" placeholder="Search" />
       </InputGroup>
       <Spacer />
-      <Avatar size="md" name={''} src={''} cursor="pointer" />)
+      <Avatar
+        size="md"
+        name={''}
+        src={''}
+        cursor="pointer"
+        onClick={() => signOut({ callbackUrl: '/' })}
+      />
+      )
     </HStack>
   )
 }
