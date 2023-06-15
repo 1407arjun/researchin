@@ -4,13 +4,7 @@ import { InputGroup, InputLeftElement, Input } from '@chakra-ui/react'
 import Logo from '@/assets/images/logo.svg'
 import { FaSearch } from 'react-icons/fa'
 
-import useAuth from '@/hooks/useAuth'
-import { useRouter } from 'next/router'
-
 export default function Navbar({ type }: { type?: 'light' | 'dark' }) {
-  const { user } = useAuth()
-  const router = useRouter()
-
   if (!type) type = 'dark'
 
   return (
@@ -23,16 +17,7 @@ export default function Navbar({ type }: { type?: 'light' | 'dark' }) {
         <Input w="33%" placeholder="Search" />
       </InputGroup>
       <Spacer />
-      <Avatar
-        size="md"
-        name={user?.profile.name}
-        src={user?.profile.pictureUrl}
-        cursor="pointer"
-        onClick={() => {
-          router.push('/auth/signout')
-        }}
-      />
-      )
+      <Avatar size="md" name={''} src={''} cursor="pointer" />)
     </HStack>
   )
 }

@@ -12,25 +12,9 @@ import {
 } from '@chakra-ui/react'
 import { Caveat } from 'next/font/google'
 
-import Loading from '@/components/auth/Loading'
-import useAuth from '@/hooks/useAuth'
-import { AuthStatus } from '@/types/auth'
-import { useRouter } from 'next/router'
-
 const caveat = Caveat({ subsets: ['latin'] })
 
 export default function Landing() {
-  const { status } = useAuth()
-  const router = useRouter()
-
-  switch (status) {
-    case AuthStatus.LOADING:
-      return <Loading />
-    case AuthStatus.AUTHENTICATED:
-      router.replace('/home')
-      break
-  }
-
   return (
     <VStack bg="light.bg" align="center" minH="100vh">
       <Namebar type="light" />
