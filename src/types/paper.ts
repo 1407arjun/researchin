@@ -5,7 +5,6 @@ export default interface Paper {
   conf?: string
   url: string
   pub?: string
-  doi?: string
   topics: string[]
   abstract?: string
 }
