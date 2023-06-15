@@ -8,5 +8,5 @@ export const profileSchema = new mongoose.Schema({
   topics: { type: [String], required: true }
 })
 
-const Profile = mongoose.model('Profile', profileSchema)
-export default Profile
+export default mongoose.models.Profile ||
+  mongoose.model('Profile', profileSchema)

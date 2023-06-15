@@ -5,7 +5,6 @@ import { MongoDBAdapter } from '@auth/mongodb-adapter'
 import clientPromise from '@/lib/mongodb'
 import Profile from '@/models/Profile'
 import mongoose from 'mongoose'
-import { profile } from 'console'
 
 export const authOptions: AuthOptions = {
   providers: [
