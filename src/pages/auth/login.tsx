@@ -23,7 +23,11 @@ export default function Login() {
         <Box>
           <Namebar headline />
           <Head title="Login" />
-          <Heading size="lg" fontWeight="semibold" color="dark.headline">
+          <Heading
+            size="lg"
+            fontWeight="semibold"
+            color="dark.headline"
+            textAlign="center">
             Sign in/Sign up
           </Heading>
         </Box>
