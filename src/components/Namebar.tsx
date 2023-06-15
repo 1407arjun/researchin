@@ -1,4 +1,4 @@
-import { Image } from '@chakra-ui/next-js'
+import { Image, Link } from '@chakra-ui/next-js'
 import { HStack, Spacer, Button, Heading } from '@chakra-ui/react'
 import Logo from '@/assets/images/logo.svg'
 
@@ -20,12 +20,14 @@ export default function Namebar({
       {!headline && <Spacer display={['none', null, 'inherit']} />}
       {!headline && (
         <Button
+          as={Link}
+          href="/auth/login"
           variant="outline"
           display={['none', null, 'inherit']}
           borderColor={`${type}.button`}
           color={`${type}.button`}
           colorScheme={type === 'dark' ? 'red' : 'twitter'}>
-          Coming soon
+          Login
         </Button>
       )}
     </HStack>

@@ -1,10 +1,9 @@
-import Auth, { AuthStatus } from '@/types/auth'
 import { createSlice } from '@reduxjs/toolkit'
 import { HYDRATE } from 'next-redux-wrapper'
 import { Store } from '../store'
 
-const initialState: Auth = {
-  status: AuthStatus.LOADING,
+const initialState = {
+  status: false,
   user: null
 }
 

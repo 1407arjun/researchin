@@ -1,6 +1,7 @@
 import Footer from '@/components/Footer'
 import Head from '@/components/Head'
 import Namebar from '@/components/Namebar'
+import { Link } from '@chakra-ui/next-js'
 import {
   Box,
   Heading,
@@ -12,25 +13,9 @@ import {
 } from '@chakra-ui/react'
 import { Caveat } from 'next/font/google'
 
-import Loading from '@/components/auth/Loading'
-import useAuth from '@/hooks/useAuth'
-import { AuthStatus } from '@/types/auth'
-import { useRouter } from 'next/router'
-
 const caveat = Caveat({ subsets: ['latin'] })
 
 export default function Landing() {
-  const { status } = useAuth()
-  const router = useRouter()
-
-  switch (status) {
-    case AuthStatus.LOADING:
-      return <Loading />
-    case AuthStatus.AUTHENTICATED:
-      router.replace('/home')
-      break
-  }
-
   return (
     <VStack bg="light.bg" align="center" minH="100vh">
       <Namebar type="light" />
@@ -59,6 +44,8 @@ export default function Landing() {
         </Text>
         <VStack align="center" alignSelf="center" position="relative">
           <Button
+            as={Link}
+            href="/auth/login"
             bg="light.button"
             color="light.buttontext"
             colorScheme="twitter"

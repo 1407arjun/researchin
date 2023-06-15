@@ -4,12 +4,10 @@ import { InputGroup, InputLeftElement, Input } from '@chakra-ui/react'
 import Logo from '@/assets/images/logo.svg'
 import { FaSearch } from 'react-icons/fa'
 
-import useAuth from '@/hooks/useAuth'
-import { useRouter } from 'next/router'
+import { signOut, useSession } from 'next-auth/react'
 
 export default function Navbar({ type }: { type?: 'light' | 'dark' }) {
-  const { user } = useAuth()
-  const router = useRouter()
+  const { data: session } = useSession()
 
   if (!type) type = 'dark'
 
@@ -25,12 +23,10 @@ export default function Navbar({ type }: { type?: 'light' | 'dark' }) {
       <Spacer />
       <Avatar
         size="md"
-        name={user?.profile.name}
-        src={user?.profile.pictureUrl}
+        name={session?.user?.name!}
+        src={session?.user?.image!}
         cursor="pointer"
-        onClick={() => {
-          router.push('/auth/signout')
-        }}
+        onClick={() => signOut({ callbackUrl: '/' })}
       />
       )
     </HStack>

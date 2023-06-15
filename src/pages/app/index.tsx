@@ -4,22 +4,31 @@ import Navbar from '@/components/Navbar'
 import { VStack } from '@chakra-ui/react'
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 
+import { GetServerSidePropsContext } from 'next'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '../api/auth/[...nextauth]'
 import Loading from '@/components/auth/Loading'
-import useAuth from '@/hooks/useAuth'
-import { AuthStatus } from '@/types/auth'
-import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
+
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+  const session = await getServerSession(ctx.req, ctx.res, authOptions)
+
+  if (!session)
+    return {
+      redirect: {
+        destination: '/auth/login'
+      },
+      props: {}
+    }
+  return {
+    props: {}
+  }
+}
 
 export default function Home() {
-  const { status } = useAuth()
-  const router = useRouter()
+  const { status } = useSession()
 
-  switch (status) {
-    case AuthStatus.LOADING:
-      return <Loading />
-    case AuthStatus.UNAUTHENTICATED:
-      router.replace('/login')
-      break
-  }
+  if (status === 'loading') return <Loading />
 
   return (
     <VStack bg="light.bg" align="center" minH="100vh" spacing={4}>
