@@ -1,7 +1,7 @@
 import Footer from '@/components/Footer'
 import Head from '@/components/Head'
 import Navbar from '@/components/Navbar'
-import { VStack } from '@chakra-ui/react'
+import { Heading, VStack, Text } from '@chakra-ui/react'
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 
 import { GetServerSidePropsContext } from 'next'
@@ -26,34 +26,32 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 }
 
 export default function Home() {
-  const { status } = useSession()
+  const { data: session, status } = useSession()
 
   if (status === 'loading') return <Loading />
 
   return (
-    <VStack bg="light.bg" align="center" minH="100vh" spacing={4}>
+    <VStack
+      bg="light.bg"
+      align="center"
+      minH="100vh"
+      spacing={4}
+      px={[8, null, 12]}>
       <Navbar type="light" />
       <Head title="Home" />
-      <Tabs
-        w="100%"
-        isFitted
-        variant="enclosed"
-        flex={1}
-        textAlign="center"
-        px={[8, null, 12]}>
-        <TabList mb="1em">
-          <Tab>For You</Tab>
-          <Tab>Subscriptions</Tab>
-        </TabList>
-        <TabPanels>
-          <TabPanel>
-            <p>one!</p>
-          </TabPanel>
-          <TabPanel>
-            <p>two!</p>
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+      <VStack align="start" w="100%" spacing={1}>
+        <Heading
+          size="lg"
+          fontWeight="semibold"
+          lineHeight="110%"
+          color="light.headline">
+          Bonjour, {session?.user?.name?.split(' ')[0]} 👋
+        </Heading>
+        <Text fontSize="md" color="light.paragraph">
+          Here&apos;s new for you this week...
+        </Text>
+      </VStack>
+
       <Footer />
     </VStack>
   )
