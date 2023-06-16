@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react'
 
 import Paper from '@/components/home/Paper'
 import Layout from '@/components/core/Layout'
-import { Grid, Heading, Text, VStack } from '@chakra-ui/react'
+import { Grid } from '@chakra-ui/react'
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const session = await getServerSession(ctx.req, ctx.res, authOptions)
@@ -29,19 +29,10 @@ export default function Home() {
   if (status === 'loading') return <Loading />
 
   return (
-    <Layout title="Home">
-      <VStack align="start" w="full" spacing={1}>
-        <Heading
-          size="lg"
-          fontWeight="semibold"
-          lineHeight="110%"
-          color="light.headline">
-          Bonjour, ${session?.user?.name?.split(' ')[0]} 👋
-        </Heading>
-        <Text fontSize="md" color="light.paragraph">
-          Here&apos;s new for you this week...
-        </Text>
-      </VStack>
+    <Layout
+      title="Home"
+      heading={`Bonjour, ${session?.user?.name?.split(' ')[0]} 👋`}
+      subheading="Here's new for you this week...">
       <Grid
         templateColumns={['repeat(1, 1fr)', null, null, 'repeat(2, 1fr)']}
         gap={4}>

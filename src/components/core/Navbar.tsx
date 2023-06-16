@@ -1,5 +1,5 @@
 import { Image, Link } from '@chakra-ui/next-js'
-import { HStack, Spacer, Avatar, Text } from '@chakra-ui/react'
+import { HStack, Spacer, Avatar, Text, Box } from '@chakra-ui/react'
 import {
   Menu,
   MenuButton,
@@ -17,7 +17,7 @@ import { useRouter } from 'next/router'
 
 const menuItems = [
   { title: 'Dashboard', href: '/app' },
-  { title: 'My Topics', href: '/app/topics' }
+  { title: 'Preferences', href: '/app/preferences' }
 ]
 
 const AvatarMenu = ({
@@ -64,12 +64,22 @@ const AvatarMenu = ({
 
 const Searchbar = ({ display }: { display: (string | null)[] }) => {
   return (
-    <InputGroup display={display}>
-      <InputLeftElement pointerEvents="none">
-        <FaSearch color="#5f6c7b" />
-      </InputLeftElement>
-      <Input w={['full', null, null, '50%']} placeholder="Search" />
-    </InputGroup>
+    <Box display={display} w="full">
+      <InputGroup>
+        <InputLeftElement pointerEvents="none">
+          <FaSearch color="#5f6c7b" />
+        </InputLeftElement>
+        <Input
+          w={['full', null, null, 'revert']}
+          placeholder="Search"
+          _focus={{
+            borderColor: 'light.button',
+            shadow: 'none',
+            borderWidth: 2
+          }}
+        />
+      </InputGroup>
+    </Box>
   )
 }
 
@@ -80,7 +90,7 @@ export default function Navbar({ type }: { type?: 'light' | 'dark' }) {
 
   return (
     <>
-      <HStack pt={4} justify="center" w="full">
+      <HStack py={2} justify="center" w="full">
         <Image w={10} src={Logo} alt="Researchin Logo" />
         <Searchbar display={['none', null, 'inherit']} />
         <Spacer />

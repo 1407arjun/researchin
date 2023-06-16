@@ -1,11 +1,4 @@
-import {
-  InputGroup,
-  InputLeftElement,
-  Input,
-  VStack,
-  Heading,
-  Text
-} from '@chakra-ui/react'
+import { InputGroup, InputLeftElement, Input } from '@chakra-ui/react'
 import { FaSearch } from 'react-icons/fa'
 
 import { GetServerSidePropsContext } from 'next'
@@ -13,8 +6,11 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '../api/auth/[...nextauth]'
 import Loading from '@/components/auth/Loading'
 import { useSession } from 'next-auth/react'
-import MyTopics from '@/components/topics/Topic'
+
 import Layout from '@/components/core/Layout'
+import Year from '@/components/preferences/Year'
+import Publisher from '@/components/preferences/Publisher'
+import Topics from '@/components/preferences/Topics'
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const session = await getServerSession(ctx.req, ctx.res, authOptions)
@@ -42,25 +38,19 @@ const Searchbar = ({ display }: { display: (string | null)[] }) => {
   )
 }
 
-export default function Topics() {
+export default function Preferences() {
   const { data: session, status } = useSession()
 
   if (status === 'loading') return <Loading />
 
   return (
-    <Layout title="My Topics">
-      <VStack align="start" w="full" spacing={1}>
-        <Heading
-          size="lg"
-          fontWeight="semibold"
-          lineHeight="110%"
-          color="light.headline">
-          My Topics
-        </Heading>
-        <Text fontSize="md" color="light.paragraph">
-          Here&apos;s what you are interested in...
-        </Text>
-      </VStack>
+    <Layout
+      title="Preferences"
+      heading="Preferences"
+      subheading="Here's what you are interested in...">
+      <Topics />
+      <Year />
+      <Publisher />
     </Layout>
   )
 }

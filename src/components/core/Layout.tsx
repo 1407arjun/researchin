@@ -8,10 +8,14 @@ import { useSession } from 'next-auth/react'
 
 export default function Layout({
   children,
-  title
+  title,
+  heading,
+  subheading
 }: {
   children: React.ReactNode
   title: string
+  heading: string
+  subheading: string
 }) {
   const { status } = useSession()
 
@@ -26,6 +30,18 @@ export default function Layout({
       px={[8, null, 12]}>
       <Navbar type="light" />
       <Head title={title} />
+      <VStack align="start" w="full" spacing={1}>
+        <Heading
+          size="lg"
+          fontWeight="semibold"
+          lineHeight="110%"
+          color="light.headline">
+          {heading}
+        </Heading>
+        <Text fontSize="md" color="light.paragraph">
+          {subheading}
+        </Text>
+      </VStack>
       {children}
       <Footer />
     </VStack>
