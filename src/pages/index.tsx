@@ -1,6 +1,6 @@
-import Footer from '@/components/Footer'
-import Head from '@/components/Head'
-import Namebar from '@/components/Namebar'
+import Footer from '@/components/core/Footer'
+import Head from '@/components/core/Head'
+import Namebar from '@/components/core/Namebar'
 import { Link } from '@chakra-ui/next-js'
 import {
   Box,

@@ -1,5 +1,5 @@
-import Namebar from '@/components/Namebar'
-import Head from '@/components/Head'
+import Namebar from '@/components/core/Namebar'
+import Head from '@/components/core/Head'
 import SocialButton from '@/components/auth/SocialButton'
 import {
   Center,
@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react'
 import { FaFacebook } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
-import Footer from '@/components/Footer'
+import Footer from '@/components/core/Footer'
 
 import { signIn, useSession } from 'next-auth/react'
 import { GetServerSidePropsContext } from 'next'
