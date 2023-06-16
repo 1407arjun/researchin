@@ -8,21 +8,20 @@ import {
   Text,
   VStack
 } from '@chakra-ui/react'
-import { BsTagFill } from 'react-icons/bs'
+import { Tag as ChakraTag, TagLeftIcon, TagLabel } from '@chakra-ui/react'
 import { MdDateRange } from 'react-icons/md'
 
 const Tag = ({ label }: { label: string }) => {
   return (
-    <Text
+    <ChakraTag
+      size="md"
+      variant="solid"
       bg="light.button"
       color="light.buttontext"
-      px={2}
-      py={1}
-      rounded="md"
-      fontSize="xs"
+      colorScheme="twitter"
       fontWeight="semibold">
       {label}
-    </Text>
+    </ChakraTag>
   )
 }
 
@@ -36,18 +35,17 @@ const Info = ({ display }: { display: (string | null)[] }) => {
       <Text fontSize={['md', null, 'lg']} fontWeight="bold" color="dark.button">
         IEEE
       </Text>
-      <HStack
+      <ChakraTag
+        size={['sm', null, 'md']}
+        variant="subtle"
         bg="dark.button"
+        colorScheme="red"
         color="dark.buttontext"
-        px={2}
-        py={1}
-        mb={[2, null, 'inherit']}
-        rounded="md"
-        fontSize={['xs', null, 'sm']}
-        fontWeight="semibold">
-        <MdDateRange />
-        <Text>19/2929</Text>
-      </HStack>
+        fontWeight="semibold"
+        mb={[2, null, 'inherit']}>
+        <TagLeftIcon as={MdDateRange} />
+        <TagLabel>19/2929</TagLabel>
+      </ChakraTag>
     </Stack>
   )
 }
@@ -55,14 +53,13 @@ const Info = ({ display }: { display: (string | null)[] }) => {
 export default function Paper() {
   return (
     <VStack
-      rounded="lg"
+      rounded="md"
       bg="light.card"
-      boxShadow="lg"
       p={4}
       w="full"
       align="start"
       spacing={0}
-      _hover={{ transform: 'scale(1.02)' }}
+      _hover={{ transform: 'scale(1.02)', shadow: 'xl' }}
       cursor="pointer">
       <Info display={['inherit', null, 'none']} />
       <HStack w="full" spacing={4}>
@@ -81,11 +78,7 @@ export default function Paper() {
         <Spacer display={['none', null, 'inherit']} />
         <Info display={['none', null, 'inherit']} />
       </HStack>
-      <HStack spacing={1} color="light.bg" fontSize={['xs', null, 'sm']} mt={2}>
-        <BsTagFill />
-        <Text fontWeight="bold">Tags: </Text>
-      </HStack>
-      <Flex wrap="wrap" gap={2} mt={1}>
+      <Flex wrap="wrap" gap={2} mt={4}>
         <Tag label="Hello" />
         <Tag label="Hello" />
         <Tag label="Hello" />

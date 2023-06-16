@@ -57,13 +57,13 @@ export default function Navbar({ type }: { type?: 'light' | 'dark' }) {
   if (!type) type = 'dark'
 
   return (
-    <HStack py={4} justify="center" w="full">
+    <HStack pt={4} justify="center" w="full">
       <Image w={10} src={Logo} alt="Researchin Logo" />
       <InputGroup display={['none', null, 'inherit']}>
         <InputLeftElement pointerEvents="none">
           <FaSearch color="#5f6c7b" />
         </InputLeftElement>
-        <Input w="33%" placeholder="Search" />
+        <Input w={['full', null, '50%', null, '33%']} placeholder="Search" />
       </InputGroup>
       <Spacer />
       <Link

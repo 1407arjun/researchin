@@ -2,7 +2,6 @@ import Footer from '@/components/Footer'
 import Head from '@/components/Head'
 import Navbar from '@/components/Navbar'
 import { Heading, VStack, Text, Grid } from '@chakra-ui/react'
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 
 import { GetServerSidePropsContext } from 'next'
 import { getServerSession } from 'next-auth'
@@ -53,7 +52,7 @@ export default function Home() {
         </Text>
       </VStack>
       <Grid
-        templateColumns={['repeat(1, 1fr)', null, 'repeat(2, 1fr)']}
+        templateColumns={['repeat(1, 1fr)', null, null, 'repeat(2, 1fr)']}
         gap={4}>
         <Paper />
         <Paper />
