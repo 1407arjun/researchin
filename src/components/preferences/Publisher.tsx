@@ -1,14 +1,34 @@
-import { Checkbox, CheckboxGroup } from '@chakra-ui/react'
+import { Checkbox, CheckboxGroup, Skeleton } from '@chakra-ui/react'
 import { VStack, Heading, Stack } from '@chakra-ui/react'
 
 import { getPref, setPubs } from '@/store/slices/preferences'
 import { useDispatch, useSelector } from 'react-redux'
 
-const publishers = ['IEEE', 'Springer']
+import { useQuery } from '@tanstack/react-query'
 
 export default function Publisher() {
+  const { isLoading, isError, data, error } = useQuery({
+    queryKey: ['publishers'],
+    queryFn: async () => {
+      const res = await fetch('/api/publishers')
+      console.log(res)
+      return res.json()
+    }
+  })
+
   const { pubs } = useSelector(getPref)
   const dispatch = useDispatch()
+
+  if (isLoading)
+    return (
+      <Stack>
+        <Skeleton height="20px" />
+        <Skeleton height="20px" />
+        <Skeleton height="20px" />
+      </Stack>
+    )
+
+  if (isError) return <p>{error}</p>
 
   return (
     <VStack
@@ -26,9 +46,12 @@ export default function Publisher() {
         defaultValue={['naruto', 'kakashi']}
         onChange={(val) => dispatch(setPubs([...val]))}>
         <Stack direction="column" alignSelf="start">
-          {publishers.map((p) => (
-            <Checkbox key={p} value={p} isChecked={pubs.includes(p)}>
-              {p}
+          {data.map((p) => (
+            <Checkbox
+              key={p.name}
+              value={p.name}
+              isChecked={JSON.stringify(pubs).includes(p.name)}>
+              {p.name}
             </Checkbox>
           ))}
         </Stack>
