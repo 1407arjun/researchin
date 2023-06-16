@@ -1,4 +1,6 @@
-export default interface Publication {
+type Publication = {
   name: string
   url: string
 }
+
+export default Publication

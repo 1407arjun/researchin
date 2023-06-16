@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { HYDRATE } from 'next-redux-wrapper'
 import { Store } from '../store'
+import Preference from '@/types/preference'
 
-const initialState = {
-  status: false,
-  user: null
+const initialState: Preference = {
+  
 }
 
-export const authSlice = createSlice({
+export const prefSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
