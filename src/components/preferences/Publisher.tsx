@@ -1,11 +1,15 @@
 import { Checkbox, CheckboxGroup } from '@chakra-ui/react'
 import { VStack, Heading, Stack } from '@chakra-ui/react'
-import { useState } from 'react'
+
+import { getPref, setPubs } from '@/store/slices/preferences'
+import { useDispatch, useSelector } from 'react-redux'
 
 const publishers = ['IEEE', 'Springer']
 
 export default function Publisher() {
-  const [selected, setSelected] = useState<(string | number)[]>([])
+  const { pubs } = useSelector(getPref)
+  const dispatch = useDispatch()
+
   return (
     <VStack
       bg="light.card"
@@ -20,10 +24,10 @@ export default function Publisher() {
       <CheckboxGroup
         colorScheme="twitter"
         defaultValue={['naruto', 'kakashi']}
-        onChange={(val) => setSelected([...val])}>
+        onChange={(val) => dispatch(setPubs([...val]))}>
         <Stack direction="column" alignSelf="start">
           {publishers.map((p) => (
-            <Checkbox key={p} value={p}>
+            <Checkbox key={p} value={p} isChecked={pubs.includes(p)}>
               {p}
             </Checkbox>
           ))}

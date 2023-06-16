@@ -5,12 +5,15 @@ import {
   RangeSliderThumb
 } from '@chakra-ui/react'
 import { VStack, Heading, Text } from '@chakra-ui/react'
-import { useState } from 'react'
+
+import { getPref, setMaxYear, setMinYear } from '@/store/slices/preferences'
+import { useSelector, useDispatch } from 'react-redux'
+import { APP_MAX_YEAR, APP_MIN_YEAR } from '@/constants/preferences'
 
 export default function Year() {
-  const year = new Date().getFullYear()
-  const [min, setMin] = useState(year - 2)
-  const [max, setMax] = useState(year)
+  const { minYear, maxYear } = useSelector(getPref)
+  const dispatch = useDispatch()
+
   return (
     <VStack
       bg="light.card"
@@ -24,15 +27,15 @@ export default function Year() {
       </Heading>
       <RangeSlider
         w={40}
-        min={year - 10}
-        max={year}
+        min={APP_MIN_YEAR}
+        max={APP_MAX_YEAR}
         step={1}
         aria-label={['min_year', 'max_year']}
         onChange={(val) => {
-          setMin(val[0])
-          setMax(val[1])
+          dispatch(setMinYear(val[0]))
+          dispatch(setMaxYear(val[1]))
         }}
-        defaultValue={[year - 2, year]}>
+        defaultValue={[minYear, maxYear]}>
         <RangeSliderTrack bg="dark.bg">
           <RangeSliderFilledTrack bg="dark.button" />
         </RangeSliderTrack>
@@ -40,7 +43,7 @@ export default function Year() {
         <RangeSliderThumb boxSize={6} index={1} />
       </RangeSlider>
       <Text fontSize="sm" fontWeight="semibold">
-        {min}-{max}
+        {minYear}-{maxYear}
       </Text>
     </VStack>
   )

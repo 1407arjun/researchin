@@ -7,12 +7,14 @@ import {
   Box
 } from '@chakra-ui/react'
 import { VStack, Heading, Flex, Input } from '@chakra-ui/react'
-import { useState } from 'react'
 
-const Topicbar = ({ tags, me }: { tags: string[]; me?: boolean }) => {
+import { getPref, setTopics } from '@/store/slices/preferences'
+import { useDispatch, useSelector } from 'react-redux'
+
+const Topicbar = ({ topics, me }: { topics: string[]; me?: boolean }) => {
   return (
     <Flex wrap="wrap" gap={2}>
-      {tags.map((t) => (
+      {topics.map((t) => (
         <Tag
           size="lg"
           key={t}
@@ -29,7 +31,8 @@ const Topicbar = ({ tags, me }: { tags: string[]; me?: boolean }) => {
 }
 
 export default function Topics() {
-  const [selected, setSelected] = useState<string[]>([])
+  const { topics } = useSelector(getPref)
+
   return (
     <VStack
       bg="light.card"
@@ -51,13 +54,13 @@ export default function Topics() {
         <Heading size="md" color="light.bg" mb={3}>
           My Topics
         </Heading>
-        <Topicbar tags={['Machine Learning', 'Artificial Intelligence']} me />
+        <Topicbar topics={topics} me />
       </Box>
       <Box w="full">
         <Heading size="md" color="light.bg" mb={3}>
           Search results
         </Heading>
-        <Topicbar tags={[]} />
+        <Topicbar topics={[]} />
       </Box>
     </VStack>
   )

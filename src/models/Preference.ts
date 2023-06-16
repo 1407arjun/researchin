@@ -7,9 +7,9 @@ export const preferenceSchema = new mongoose.Schema<Preference>({
     ref: 'User'
   },
   topics: { type: [String], required: true },
-  min_year: Number,
-  max_year: Number,
-  pub: [
+  minYear: { type: Number, required: true },
+  maxYear: { type: Number, required: true },
+  pubs: [
     {
       type: mongoose.Types.ObjectId,
       ref: 'Publication'

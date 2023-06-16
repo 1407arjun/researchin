@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { createWrapper } from 'next-redux-wrapper'
 
-import { authSlice } from './slices/auth'
+import { prefSlice } from './slices/preferences'
 
 const store = configureStore({
   reducer: {
-    [authSlice.name]: authSlice.reducer
+    [prefSlice.name]: prefSlice.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),

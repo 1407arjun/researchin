@@ -4,9 +4,9 @@ import User from './user'
 type Preference = {
   user?: User
   topics: string[]
-  min_year: number
-  max_year: number
-  pub: Publication[]
+  minYear: number
+  maxYear: number
+  pubs: Publication[]
 }
 
 export default Preference
