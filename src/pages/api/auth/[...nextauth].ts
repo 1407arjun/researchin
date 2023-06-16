@@ -3,7 +3,7 @@ import NextAuth, { AuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import { MongoDBAdapter } from '@auth/mongodb-adapter'
 import clientPromise from '@/lib/mongodb'
-import Profile from '@/models/Profile'
+import Profile from '@/models/Preference'
 import mongoose from 'mongoose'
 
 export const authOptions: AuthOptions = {
