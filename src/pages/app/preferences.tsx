@@ -12,6 +12,7 @@ import { useSession } from 'next-auth/react'
 import Preference from '@/types/preference'
 import Publication from '@/types/publication'
 import { Skeleton, Stack, VStack } from '@chakra-ui/react'
+import Error from '@/components/core/Error'
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const session = await getServerSession(ctx.req, ctx.res, authOptions)
@@ -75,6 +76,12 @@ export default function Preferences() {
       </Layout>
     )
 
+  if (isError) {
+    //@ts-ignore
+    return <Error name={error.name} message={error.message} />
+  }
+
+  const { preferences, publishers } = data
   return (
     <Layout
       title="Preferences"
