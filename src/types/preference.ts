@@ -1,9 +1,11 @@
+import Publication from './publication'
+
 type Preference = {
   userId?: string
   topics: string[]
   minYear: number
   maxYear: number
-  pubs: string[]
+  pubs: Publication[]
 }
 
 export default Preference

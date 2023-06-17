@@ -25,7 +25,7 @@ export default function Year() {
         min={APP_MIN_YEAR}
         max={APP_MAX_YEAR}
         step={1}
-        aria-label={['min_year', 'max_year']}
+        aria-label={['min-year', 'max-year']}
         onChange={(val) => {
           dispatch(setMinYear(val[0]))
           dispatch(setMaxYear(val[1]))

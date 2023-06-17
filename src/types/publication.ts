@@ -1,4 +1,5 @@
 type Publication = {
+  _id: string
   name: string
   url: string
 }

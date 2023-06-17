@@ -11,7 +11,7 @@ export const preferenceSchema = new mongoose.Schema<Preference>({
   maxYear: { type: Number, required: true },
   pubs: [
     {
-      type: String,
+      type: mongoose.Types.ObjectId,
       ref: 'Publication'
     }
   ]

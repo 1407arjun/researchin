@@ -63,6 +63,7 @@ export default function Preferences() {
     if (!isLoading && !isError) {
       console.log(data)
       const { topics, minYear, maxYear, pubs } = data.preferences
+      console.log(data)
       dispatch(setTopics([...topics]))
       dispatch(setMinYear(minYear))
       dispatch(setMaxYear(maxYear))
@@ -101,7 +102,7 @@ export default function Preferences() {
           w={['full', null, null, '33%']}
           direction={['column', null, 'row', 'column']}>
           {!isLoading ? (
-            <Publisher publishers={data.publishers.map((p) => p.name)} />
+            <Publisher publishers={data.publishers} />
           ) : (
             <Skeleton w="full" h={40} />
           )}
