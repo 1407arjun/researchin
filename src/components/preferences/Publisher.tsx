@@ -13,7 +13,6 @@ export default function Publisher({
 }) {
   const { pubs } = useSelector(getPref)
   const dispatch = useDispatch()
-  console.log(pubs)
 
   return (
     <Card>
@@ -22,14 +21,13 @@ export default function Publisher({
       </Heading>
       <CheckboxGroup
         colorScheme="twitter"
-        defaultValue={pubs.map((p) => JSON.stringify(p))}
         onChange={(val) =>
           dispatch(setPubs([...val.map((v) => JSON.parse(v.toString()))]))
         }>
         <Stack direction="column" alignSelf="start">
           {publishers.map((p) => {
             return (
-              <Checkbox key={p._id} value={JSON.stringify(p)}>
+              <Checkbox key={p._id} value={JSON.stringify(p)} isChecked={true}>
                 {p.name}
               </Checkbox>
             )
