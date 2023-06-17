@@ -72,37 +72,10 @@ export default function Preferences() {
 
   if (status === 'loading') return <Loading />
 
-  if (isLoading)
-    return (
-      <Layout
-        title="Preferences"
-        heading="Preferences"
-        subheading="Here's what you are interested in...">
-        <Stack
-          direction={['column', null, null, 'row']}
-          w="full"
-          spacing={[2, null, null, 4]}>
-          <VStack w={['full', null, null, '67%']}>
-            <Skeleton w="full" h={20} />
-            <Skeleton w="full" h="full" />
-            <Skeleton w="full" h="full" />
-          </VStack>
-          <Stack
-            w={['full', null, null, '33%']}
-            direction={['column', null, 'row', 'column']}>
-            <Skeleton w="full" h={40} />
-            <Skeleton w="full" h={40} />
-          </Stack>
-        </Stack>
-      </Layout>
-    )
-
   if (isError) {
     //@ts-ignore
     return <Error name={error.name} message={error.message} />
   }
-
-  const { publishers } = data
 
   return (
     <Layout
@@ -114,13 +87,25 @@ export default function Preferences() {
         w="full"
         spacing={[2, null, null, 4]}>
         <VStack w={['full', null, null, '67%']}>
-          <Topics />
+          {!isLoading ? (
+            <Topics />
+          ) : (
+            <>
+              <Skeleton w="full" h={20} />
+              <Skeleton w="full" h="full" />
+              <Skeleton w="full" h="full" />
+            </>
+          )}
         </VStack>
         <Stack
           w={['full', null, null, '33%']}
           direction={['column', null, 'row', 'column']}>
-          <Publisher publishers={publishers.map((p) => p.name)} />
-          <Year />
+          {!isLoading ? (
+            <Publisher publishers={data.publishers.map((p) => p.name)} />
+          ) : (
+            <Skeleton w="full" h={40} />
+          )}
+          {!isLoading ? <Year /> : <Skeleton w="full" h={40} />}
         </Stack>
       </Stack>
     </Layout>
