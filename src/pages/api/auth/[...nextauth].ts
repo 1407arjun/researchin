@@ -1,11 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import NextAuth, { AuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
-import { MongoDBAdapter } from '@auth/mongodb-adapter'
 import clientPromise from '@/lib/mongodb'
 import Preference from '@/models/Preference'
 import mongoose from 'mongoose'
-import { APP_MAX_YEAR, APP_MIN_YEAR } from '@/constants/preferences'
+import { APP_MAX_YEAR } from '@/constants/preferences'
+import MongooseAdapter from '@/lib/adapter'
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -15,8 +15,7 @@ export const authOptions: AuthOptions = {
       profileUrl: 'https://www.googleapis.com/oauth2/v3/userinfo'
     })
   ],
-  //@ts-ignore
-  adapter: MongoDBAdapter(clientPromise),
+  adapter: MongooseAdapter(clientPromise),
   secret: process.env.NEXTAUTH_SECRET!,
   pages: {
     signIn: '/auth/login',

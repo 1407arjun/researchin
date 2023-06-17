@@ -2,8 +2,8 @@ import mongoose from 'mongoose'
 import Preference from '@/types/preference'
 
 export const preferenceSchema = new mongoose.Schema<Preference>({
-  user: {
-    type: mongoose.Types.ObjectId,
+  userId: {
+    type: String,
     ref: 'User'
   },
   topics: { type: [String], required: true },
@@ -11,7 +11,7 @@ export const preferenceSchema = new mongoose.Schema<Preference>({
   maxYear: { type: Number, required: true },
   pubs: [
     {
-      type: mongoose.Types.ObjectId,
+      type: String,
       ref: 'Publication'
     }
   ]

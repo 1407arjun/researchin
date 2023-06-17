@@ -1,8 +1,7 @@
 import Publication from './publication'
-import User from './user'
 
 type Preference = {
-  user?: User
+  userId?: string
   topics: string[]
   minYear: number
   maxYear: number

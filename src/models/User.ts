@@ -1,11 +1,12 @@
-import User from '@/types/user'
 import mongoose from 'mongoose'
+import { AdapterUser } from 'next-auth/adapters'
 
-export const userSchema = new mongoose.Schema<User>({
-  name: { type: String, required: true },
-  image: { type: String, required: true },
-  email: { type: String, required: true },
-  emailVerified: Boolean
+export const userSchema = new mongoose.Schema<AdapterUser>({
+  name: String,
+  image: String,
+  email: String,
+  emailVerified: Date
 })
 
-export default mongoose.models.User || mongoose.model<User>('User', userSchema)
+export default mongoose.models.User ||
+  mongoose.model<AdapterUser>('User', userSchema)

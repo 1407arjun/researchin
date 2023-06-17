@@ -1,6 +1,7 @@
 import Footer from '@/components/core/Footer'
 import Head from '@/components/core/Head'
 import Namebar from '@/components/core/Namebar'
+import MyAdapter from '@/lib/adapter'
 import { Link } from '@chakra-ui/next-js'
 import {
   Box,
@@ -11,6 +12,7 @@ import {
   Icon,
   createIcon
 } from '@chakra-ui/react'
+import mongoose from 'mongoose'
 import { Caveat } from 'next/font/google'
 
 const caveat = Caveat({ subsets: ['latin'] })
