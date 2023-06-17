@@ -4,7 +4,8 @@ import {
   RangeSliderFilledTrack,
   RangeSliderThumb
 } from '@chakra-ui/react'
-import { VStack, Heading, Text } from '@chakra-ui/react'
+import { Heading, Text } from '@chakra-ui/react'
+import Card from './Card'
 
 import { getPref, setMaxYear, setMinYear } from '@/store/slices/preferences'
 import { useSelector, useDispatch } from 'react-redux'
@@ -15,13 +16,7 @@ export default function Year() {
   const dispatch = useDispatch()
 
   return (
-    <VStack
-      bg="light.card"
-      shadow="lg"
-      color="light.cardtext"
-      py={4}
-      px={6}
-      rounded="md">
+    <Card>
       <Heading size="md" color="light.bg" mb={3}>
         Year of publication
       </Heading>
@@ -45,6 +40,6 @@ export default function Year() {
       <Text fontSize="sm" fontWeight="semibold">
         {minYear}-{maxYear}
       </Text>
-    </VStack>
+    </Card>
   )
 }

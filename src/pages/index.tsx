@@ -27,7 +27,7 @@ export default function Landing() {
         justify="center"
         textAlign="center"
         spacing={[8, null, 12]}
-        p={[8, null, 12]}
+        p={8}
         maxW="3xl">
         <Heading
           size="3xl"

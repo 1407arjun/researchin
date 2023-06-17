@@ -10,6 +10,7 @@ import { VStack, Heading, Flex, Input } from '@chakra-ui/react'
 
 import { getPref, setTopics } from '@/store/slices/preferences'
 import { useDispatch, useSelector } from 'react-redux'
+import Card from './Card'
 
 const Topicbar = ({ topics, me }: { topics: string[]; me?: boolean }) => {
   return (
@@ -34,14 +35,7 @@ export default function Topics() {
   const { topics } = useSelector(getPref)
 
   return (
-    <VStack
-      bg="light.card"
-      shadow="lg"
-      color="light.cardtext"
-      py={4}
-      px={6}
-      rounded="md"
-      spacing={4}>
+    <Card>
       <Input
         placeholder="Search for topics"
         borderColor="light.cardtext"
@@ -62,6 +56,6 @@ export default function Topics() {
         </Heading>
         <Topicbar topics={[]} />
       </Box>
-    </VStack>
+    </Card>
   )
 }

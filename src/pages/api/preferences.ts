@@ -14,7 +14,6 @@ export default async function getPreferences(
   if (session) {
     await mongoose.connect(process.env.MONGODB_URI!)
     const pubs = await Preference.find({ user: session.user.id })
-    console.log(pubs)
     res.send(pubs)
   } else return res.status(401).end()
 }
