@@ -13,7 +13,7 @@ export default async function getPreferences(
 
   if (session) {
     await mongoose.connect(process.env.MONGODB_URI!)
-    const pubs = await Preference.find({ user: session.user.id })
+    const pubs = await Preference.findOne({ user: session.user.id })
     res.send(pubs)
   } else return res.status(401).end()
 }

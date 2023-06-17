@@ -5,7 +5,7 @@ import Card from './Card'
 import { getPref, setPubs } from '@/store/slices/preferences'
 import { useDispatch, useSelector } from 'react-redux'
 
-export default function Publisher() {
+export default function Publisher({ publishers }: { publishers: string[] }) {
   const { pubs } = useSelector(getPref)
   const dispatch = useDispatch()
 
@@ -19,12 +19,12 @@ export default function Publisher() {
         defaultValue={['naruto', 'kakashi']}
         onChange={(val) => dispatch(setPubs([...val]))}>
         <Stack direction="column" alignSelf="start">
-          {[].map((p) => (
+          {publishers.map((p) => (
             <Checkbox
-              key={p.name}
-              value={p.name}
-              isChecked={JSON.stringify(pubs).includes(p.name)}>
-              {p.name}
+              key={p}
+              value={p}
+              isChecked={JSON.stringify(pubs).includes(p)}>
+              {p}
             </Checkbox>
           ))}
         </Stack>
