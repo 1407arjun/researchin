@@ -38,9 +38,9 @@ export default function MongooseAdapter(
     async deleteUser(userId) {
       await client
       await Promise.all([
-        Account.deleteMany({ userId: new mongoose.Types.ObjectId(userId) }),
-        Session.deleteMany({ userId: new mongoose.Types.ObjectId(userId) }),
-        User.deleteOne({ id: new mongoose.Types.ObjectId(userId) })
+        Account.deleteMany({ userId: userId }),
+        Session.deleteMany({ userId: userId }),
+        User.deleteOne({ id: userId })
       ])
     },
     async linkAccount(account) {
@@ -60,7 +60,7 @@ export default function MongooseAdapter(
       return await new Session({
         sessionToken,
         expires,
-        userId: new mongoose.Types.ObjectId(userId)
+        userId: userId
       }).save()
     },
     async getSessionAndUser(sessionToken) {

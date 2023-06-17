@@ -8,7 +8,7 @@ const initialState: Preference = {
   topics: [],
   minYear: APP_MIN_YEAR,
   maxYear: APP_MAX_YEAR,
-  pubs: []
+  pubIds: []
 }
 
 export const prefSlice = createSlice({
@@ -25,7 +25,7 @@ export const prefSlice = createSlice({
       state.maxYear = action.payload
     },
     setPubs: (state, action) => {
-      state.pubs = [...action.payload]
+      state.pubIds = [...action.payload]
     },
     extraReducers: {
       //@ts-ignore

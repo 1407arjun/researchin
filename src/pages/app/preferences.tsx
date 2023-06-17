@@ -59,15 +59,16 @@ export default function Preferences() {
   })
 
   const dispatch = useDispatch()
+  
   useEffect(() => {
     if (!isLoading && !isError) {
       console.log(data)
-      const { topics, minYear, maxYear, pubs } = data.preferences
+      const { topics, minYear, maxYear, pubIds } = data.preferences
       console.log(data)
       dispatch(setTopics([...topics]))
       dispatch(setMinYear(minYear))
       dispatch(setMaxYear(maxYear))
-      dispatch(setPubs([...pubs]))
+      dispatch(setPubs([...pubIds]))
     }
   }, [data])
 

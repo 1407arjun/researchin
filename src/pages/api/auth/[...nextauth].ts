@@ -32,7 +32,7 @@ export const authOptions: AuthOptions = {
     createUser: async ({ user }) => {
       await mongoose.connect(process.env.MONGODB_URI!)
       const pref = new Preference({
-        userId: new mongoose.Types.ObjectId(user.id),
+        userId: user.id,
         topics: [],
         minYear: APP_MAX_YEAR - 2,
         maxYear: APP_MAX_YEAR,
