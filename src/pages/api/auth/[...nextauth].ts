@@ -21,10 +21,17 @@ export const authOptions: AuthOptions = {
   pages: {
     signIn: '/auth/login',
     signOut: '',
-    newUser: '/app'
+    newUser: '/app/preferences'
+  },
+  callbacks: {
+    session: ({ session, user }) => {
+      session.user.id = user.id
+      return session
+    }
   },
   events: {
     createUser: async ({ user }) => {
+      await mongoose.connect(process.env.MONGODB_URI!)
       const pref = new Preference({
         user: new mongoose.Types.ObjectId(user.id),
         topics: [],
