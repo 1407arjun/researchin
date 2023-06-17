@@ -10,7 +10,12 @@ import {
 import { Heading, Flex, Input } from '@chakra-ui/react'
 import { MdAdd, MdClose } from 'react-icons/md'
 
-import { getPref, setTopics } from '@/store/slices/preferences'
+import {
+  addTopic,
+  getPref,
+  removeTopic,
+  setTopics
+} from '@/store/slices/preferences'
 import { useDispatch, useSelector } from 'react-redux'
 import Card from './Card'
 import { useEffect, useState } from 'react'
@@ -40,9 +45,7 @@ const Topicbar = ({ topics, me }: { topics: string[]; me?: boolean }) => {
             <IconButton
               size="sm"
               aria-label="Remove topic"
-              onClick={() =>
-                dispatch(setTopics(topics.filter((tp) => tp !== t)))
-              }
+              onClick={() => dispatch(removeTopic(t))}
               bg="transparent"
               color="light.bg"
               _hover={{ bg: 'transparent', opacity: 0.75 }}
@@ -55,7 +58,7 @@ const Topicbar = ({ topics, me }: { topics: string[]; me?: boolean }) => {
             <IconButton
               size="sm"
               aria-label="Add topic"
-              onClick={() => dispatch(setTopics([...topics, t]))}
+              onClick={() => dispatch(addTopic(t))}
               bg="transparent"
               color="light.bg"
               _hover={{ bg: 'transparent', opacity: 0.75 }}
@@ -72,20 +75,9 @@ const Topicbar = ({ topics, me }: { topics: string[]; me?: boolean }) => {
 
 export default function Topics() {
   const { topics } = useSelector(getPref)
+  console.log(topics)
   const [search, setSearch] = useState('')
-  const [myTopics, setMyTopics] = useState(topics)
-  const [allTopics, setAllTopics] = useState(
-    masterTopics.filter((t) => !topics.includes(t))
-  )
-
-  useEffect(() => {
-    setMyTopics(
-      search ? myTopics.filter((t) => t.includes(search)) : [...topics]
-    )
-    setAllTopics(
-      search ? allTopics.filter((t) => t.includes(search)) : [...allTopics]
-    )
-  }, [search])
+  const allTopics = masterTopics.filter((t) => !topics.includes(t))
 
   return (
     <Card>
@@ -103,13 +95,30 @@ export default function Topics() {
         <Heading size="md" color="light.bg" mb={3}>
           My Topics
         </Heading>
-        <Topicbar topics={myTopics} me />
+        <Topicbar
+          topics={
+            search.trim() !== ''
+              ? topics.filter((t) =>
+                  t.toLowerCase().includes(search.toLowerCase())
+                )
+              : [...topics]
+          }
+          me
+        />
       </Box>
       <Box w="full">
         <Heading size="md" color="light.bg" mb={3}>
           Search results
         </Heading>
-        <Topicbar topics={allTopics} />
+        <Topicbar
+          topics={
+            search.trim() !== ''
+              ? allTopics.filter((t) =>
+                  t.toLowerCase().includes(search.toLowerCase())
+                )
+              : [...allTopics]
+          }
+        />
       </Box>
     </Card>
   )
