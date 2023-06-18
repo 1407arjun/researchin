@@ -1,61 +1,44 @@
 import { Checkbox, CheckboxGroup, Skeleton } from '@chakra-ui/react'
-import { VStack, Heading, Stack } from '@chakra-ui/react'
+import { Heading, Flex } from '@chakra-ui/react'
+import Card from './Card'
 
 import { getPref, setPubs } from '@/store/slices/preferences'
 import { useDispatch, useSelector } from 'react-redux'
+import Publication from '@/types/publication'
 
-import { useQuery } from '@tanstack/react-query'
-
-export default function Publisher() {
-  const { isLoading, isError, data, error } = useQuery({
-    queryKey: ['publishers'],
-    queryFn: async () => {
-      const res = await fetch('/api/publishers')
-      console.log(res)
-      return res.json()
-    }
-  })
-
-  const { pubs } = useSelector(getPref)
+export default function Publisher({
+  myPublishers,
+  publishers
+}: {
+  myPublishers: string[]
+  publishers: Publication[]
+}) {
   const dispatch = useDispatch()
 
-  if (isLoading)
-    return (
-      <Stack>
-        <Skeleton height="20px" />
-        <Skeleton height="20px" />
-        <Skeleton height="20px" />
-      </Stack>
-    )
-
-  if (isError) return <p>{error}</p>
-
   return (
-    <VStack
-      bg="light.card"
-      shadow="lg"
-      color="light.cardtext"
-      py={4}
-      px={6}
-      rounded="md">
+    <Card>
       <Heading size="md" color="light.bg" mb={1}>
         Publishers (A-Z)
       </Heading>
       <CheckboxGroup
         colorScheme="twitter"
-        defaultValue={['naruto', 'kakashi']}
+        defaultValue={myPublishers}
         onChange={(val) => dispatch(setPubs([...val]))}>
-        <Stack direction="column" alignSelf="start">
-          {data.map((p) => (
-            <Checkbox
-              key={p.name}
-              value={p.name}
-              isChecked={JSON.stringify(pubs).includes(p.name)}>
-              {p.name}
-            </Checkbox>
-          ))}
-        </Stack>
+        <Flex
+          wrap="wrap"
+          gap={4}
+          alignSelf="start"
+          justify="space-evenly"
+          w="full">
+          {publishers.map((p) => {
+            return (
+              <Checkbox key={p._id} value={p._id} fontWeight="semibold">
+                {p.name}
+              </Checkbox>
+            )
+          })}
+        </Flex>
       </CheckboxGroup>
-    </VStack>
+    </Card>
   )
 }

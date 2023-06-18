@@ -8,7 +8,7 @@ const initialState: Preference = {
   topics: [],
   minYear: APP_MIN_YEAR,
   maxYear: APP_MAX_YEAR,
-  pubs: []
+  pubIds: []
 }
 
 export const prefSlice = createSlice({
@@ -18,6 +18,12 @@ export const prefSlice = createSlice({
     setTopics: (state, action) => {
       state.topics = [...action.payload]
     },
+    addTopic: (state, action) => {
+      state.topics = [...state.topics, action.payload]
+    },
+    removeTopic: (state, action) => {
+      state.topics = state.topics.filter((t) => t !== action.payload)
+    },
     setMinYear: (state, action) => {
       state.minYear = action.payload
     },
@@ -25,7 +31,7 @@ export const prefSlice = createSlice({
       state.maxYear = action.payload
     },
     setPubs: (state, action) => {
-      state.pubs = [...action.payload]
+      state.pubIds = [...action.payload]
     },
     extraReducers: {
       //@ts-ignore
@@ -39,6 +45,13 @@ export const prefSlice = createSlice({
   }
 })
 
-export const { setTopics, setMinYear, setMaxYear, setPubs } = prefSlice.actions
+export const {
+  setTopics,
+  addTopic,
+  removeTopic,
+  setMinYear,
+  setMaxYear,
+  setPubs
+} = prefSlice.actions
 export const getPref = (state: Store) => state.preferences
 export default prefSlice.reducer

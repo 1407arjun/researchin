@@ -4,6 +4,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 import mongoose from 'mongoose'
 import Preference from '@/models/Preference'
+import clientPromise from '@/lib/mongodb'
 
 export default async function getPreferences(
   req: NextApiRequest,
@@ -12,9 +13,21 @@ export default async function getPreferences(
   const session = await getServerSession(req, res, authOptions)
 
   if (session) {
-    await mongoose.connect(process.env.MONGODB_URI!)
-    const pubs = await Preference.find({ user: session.user.id })
-    console.log(pubs)
-    res.send(pubs)
+    if (req.method === 'GET') {
+      await clientPromise
+      const prefs = await Preference.findOne({
+        userId: session.user.id
+      })
+      //.populate('pubs')
+      res.send(prefs)
+    }
+    if (req.method === 'POST') {
+      await clientPromise
+      const prefs = await Preference.updateOne(
+        { userId: session.user.id },
+        { $set: JSON.parse(req.body) }
+      )
+      res.send(prefs)
+    }
   } else return res.status(401).end()
 }

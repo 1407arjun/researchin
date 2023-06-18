@@ -1,7 +1,7 @@
 import Footer from '@/components/core/Footer'
 import Head from '@/components/core/Head'
 import Navbar from '@/components/core/Navbar'
-import { Heading, VStack, Text } from '@chakra-ui/react'
+import { Heading, VStack, Text, Box } from '@chakra-ui/react'
 
 import Loading from '@/components/auth/Loading'
 import { useSession } from 'next-auth/react'
@@ -42,7 +42,9 @@ export default function Layout({
           {subheading}
         </Text>
       </VStack>
-      {children}
+      <Box flex={1} w="full" textAlign="center">
+        {children}
+      </Box>
       <Footer />
     </VStack>
   )

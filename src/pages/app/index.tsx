@@ -34,6 +34,7 @@ export default function Home() {
       heading={`Bonjour, ${session?.user?.name?.split(' ')[0]} 👋`}
       subheading="Here's new for you this week...">
       <Grid
+        textAlign="initial"
         templateColumns={['repeat(1, 1fr)', null, null, 'repeat(2, 1fr)']}
         gap={4}>
         <Paper />
