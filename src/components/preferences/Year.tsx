@@ -21,7 +21,7 @@ export default function Year({ min, max }: { min: number; max: number }) {
         Year of publication
       </Heading>
       <Text fontSize="md" fontWeight="semibold">
-        {min}-{maxYear}
+        {minYear}-{maxYear}
       </Text>
       <RangeSlider
         w="full"

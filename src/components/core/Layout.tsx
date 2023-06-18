@@ -42,7 +42,7 @@ export default function Layout({
           {subheading}
         </Text>
       </VStack>
-      <Box flex={1} w="full">
+      <Box flex={1} w="full" textAlign="center">
         {children}
       </Box>
       <Footer />

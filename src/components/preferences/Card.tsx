@@ -11,7 +11,8 @@ export default function Card({ children }: { children: React.ReactNode }) {
       py={4}
       px={6}
       rounded="md"
-      spacing={4}>
+      spacing={4}
+      align="start">
       {children}
     </VStack>
   )

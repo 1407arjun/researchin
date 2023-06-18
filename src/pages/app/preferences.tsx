@@ -3,7 +3,7 @@ import Year from '@/components/preferences/Year'
 import Publisher from '@/components/preferences/Publisher'
 import Topics from '@/components/preferences/Topics'
 import { useQuery } from '@tanstack/react-query'
-import { Skeleton, Stack, VStack } from '@chakra-ui/react'
+import { Button, Skeleton, Stack, VStack } from '@chakra-ui/react'
 
 import { GetServerSidePropsContext } from 'next'
 import { getServerSession } from 'next-auth'
@@ -14,9 +14,10 @@ import Preference from '@/types/preference'
 import Publication from '@/types/publication'
 import Error from '@/components/core/Error'
 
-import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import {
+  getPref,
   setMaxYear,
   setMinYear,
   setPubs,
@@ -40,7 +41,8 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 
 export default function Preferences() {
   const { status } = useSession()
-
+  const [isSaving, setIsSaving] = useState(false)
+  const { topics, minYear, maxYear, pubIds } = useSelector(getPref)
   const { isLoading, isError, data, error } = useQuery({
     queryKey: ['preferences'],
     queryFn: async (): Promise<{
@@ -120,6 +122,28 @@ export default function Preferences() {
           )}
         </Stack>
       </Stack>
+      <Button
+        mt={4}
+        bg="light.button"
+        color="light.buttontext"
+        colorScheme="twitter"
+        size="md"
+        isDisabled={isSaving}
+        isLoading={isSaving}
+        onClick={async () => {
+          try {
+            setIsSaving(true)
+            const res = await fetch('/api/preferences', {
+              method: 'POST',
+              body: JSON.stringify({ topics, minYear, maxYear, pubIds })
+            })
+          } catch (e) {
+          } finally {
+            setIsSaving(false)
+          }
+        }}>
+        Save changes
+      </Button>
     </Layout>
   )
 }
