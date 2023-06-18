@@ -8,13 +8,14 @@ const uri = process.env.MONGODB_URI
 
 let clientPromise: Promise<typeof mongoose>
 
-if (process.env.NODE_ENV === 'development') {
-  if (!global._mongoClientPromise) {
-    global._mongoClientPromise = mongoose.connect(uri)
-  }
-  clientPromise = global._mongoClientPromise
-} else {
-  clientPromise = mongoose.connect(uri)
-}
+// if (process.env.NODE_ENV === 'development') {
+//   if (!global._mongoClientPromise) {
+//     global._mongoClientPromise = mongoose.connect(uri)
+//   }
+//   clientPromise = global._mongoClientPromise
+// } else {
+//   clientPromise = mongoose.connect(uri)
+// }
+clientPromise = mongoose.connect(uri)
 
 export default clientPromise
