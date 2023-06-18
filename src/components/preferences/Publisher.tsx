@@ -1,5 +1,5 @@
 import { Checkbox, CheckboxGroup, Skeleton } from '@chakra-ui/react'
-import { Heading, Stack } from '@chakra-ui/react'
+import { Heading, Flex } from '@chakra-ui/react'
 import Card from './Card'
 
 import { getPref, setPubs } from '@/store/slices/preferences'
@@ -7,11 +7,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import Publication from '@/types/publication'
 
 export default function Publisher({
+  myPublishers,
   publishers
 }: {
+  myPublishers: string[]
   publishers: Publication[]
 }) {
-  const { pubs } = useSelector(getPref)
   const dispatch = useDispatch()
 
   return (
@@ -21,18 +22,22 @@ export default function Publisher({
       </Heading>
       <CheckboxGroup
         colorScheme="twitter"
-        onChange={(val) =>
-          dispatch(setPubs([...val.map((v) => JSON.parse(v.toString()))]))
-        }>
-        <Stack direction="column" alignSelf="start">
+        defaultValue={myPublishers}
+        onChange={(val) => dispatch(setPubs([...val]))}>
+        <Flex
+          wrap="wrap"
+          gap={4}
+          alignSelf="start"
+          justify="space-evenly"
+          w="full">
           {publishers.map((p) => {
             return (
-              <Checkbox key={p._id} value={JSON.stringify(p)} isChecked={true}>
+              <Checkbox key={p._id} value={p._id} fontWeight="semibold">
                 {p.name}
               </Checkbox>
             )
           })}
-        </Stack>
+        </Flex>
       </CheckboxGroup>
     </Card>
   )

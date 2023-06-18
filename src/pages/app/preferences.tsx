@@ -59,7 +59,7 @@ export default function Preferences() {
   })
 
   const dispatch = useDispatch()
-  
+
   useEffect(() => {
     if (!isLoading && !isError) {
       console.log(data)
@@ -103,11 +103,21 @@ export default function Preferences() {
           w={['full', null, null, '33%']}
           direction={['column', null, 'row', 'column']}>
           {!isLoading ? (
-            <Publisher publishers={data.publishers} />
+            <Publisher
+              myPublishers={data.preferences.pubIds}
+              publishers={data.publishers}
+            />
           ) : (
             <Skeleton w="full" h={40} />
           )}
-          {!isLoading ? <Year /> : <Skeleton w="full" h={40} />}
+          {!isLoading ? (
+            <Year
+              min={data.preferences.minYear}
+              max={data.preferences.maxYear}
+            />
+          ) : (
+            <Skeleton w="full" h={40} />
+          )}
         </Stack>
       </Stack>
     </Layout>

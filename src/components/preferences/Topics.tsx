@@ -32,7 +32,7 @@ const Topicbar = ({ topics, me }: { topics: string[]; me?: boolean }) => {
   const dispatch = useDispatch()
 
   return (
-    <Flex wrap="wrap" gap={2}>
+    <Flex wrap="wrap" gap={4} justify="start" pb={!me ? 2 : 'initial'}>
       {topics.map((t) => (
         <Tag
           size="lg"
@@ -75,12 +75,14 @@ const Topicbar = ({ topics, me }: { topics: string[]; me?: boolean }) => {
 
 export default function Topics() {
   const { topics } = useSelector(getPref)
-  console.log(topics)
   const [search, setSearch] = useState('')
-  const allTopics = masterTopics.filter((t) => !topics.includes(t))
+  const allTopics = masterTopics.filter((t) => !topics.includes(t)).sort()
 
   return (
     <Card>
+      <Heading size="md" color="light.bg" mb={1}>
+        My Topics
+      </Heading>
       <Input
         placeholder="Search for topics"
         borderColor="light.cardtext"
@@ -90,33 +92,31 @@ export default function Topics() {
         _placeholder={{ color: 'light.cardtext' }}
         value={search}
         onChange={(e) => setSearch(e.target.value)}
+        mb={2}
       />
       <Box w="full" mb={2}>
-        <Heading size="md" color="light.bg" mb={3}>
-          My Topics
-        </Heading>
         <Topicbar
           topics={
             search.trim() !== ''
-              ? topics.filter((t) =>
-                  t.toLowerCase().includes(search.toLowerCase())
-                )
-              : [...topics]
+              ? topics
+                  .filter((t) => t.toLowerCase().includes(search.toLowerCase()))
+                  .sort()
+              : [...topics].sort()
           }
           me
         />
       </Box>
       <Box w="full">
-        <Heading size="md" color="light.bg" mb={3}>
-          Search results
+        <Heading size="sm" color="light.bg" mb={3}>
+          Suggested topics
         </Heading>
         <Topicbar
           topics={
             search.trim() !== ''
-              ? allTopics.filter((t) =>
-                  t.toLowerCase().includes(search.toLowerCase())
-                )
-              : [...allTopics]
+              ? allTopics
+                  .filter((t) => t.toLowerCase().includes(search.toLowerCase()))
+                  .sort()
+              : [...allTopics].sort()
           }
         />
       </Box>
