@@ -1,14 +1,12 @@
-import Footer from '@/components/Footer'
-import Head from '@/components/Head'
-import Navbar from '@/components/Navbar'
-import { VStack } from '@chakra-ui/react'
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
-
 import { GetServerSidePropsContext } from 'next'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../api/auth/[...nextauth]'
 import Loading from '@/components/auth/Loading'
 import { useSession } from 'next-auth/react'
+
+import Paper from '@/components/home/Paper'
+import Layout from '@/components/core/Layout'
+import { Grid } from '@chakra-ui/react'
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const session = await getServerSession(ctx.req, ctx.res, authOptions)
@@ -26,35 +24,23 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 }
 
 export default function Home() {
-  const { status } = useSession()
+  const { data: session, status } = useSession()
 
   if (status === 'loading') return <Loading />
 
   return (
-    <VStack bg="light.bg" align="center" minH="100vh" spacing={4}>
-      <Navbar type="light" />
-      <Head title="Home" />
-      <Tabs
-        w="100%"
-        isFitted
-        variant="enclosed"
-        flex={1}
-        textAlign="center"
-        px={[8, null, 12]}>
-        <TabList mb="1em">
-          <Tab>For You</Tab>
-          <Tab>Subscriptions</Tab>
-        </TabList>
-        <TabPanels>
-          <TabPanel>
-            <p>one!</p>
-          </TabPanel>
-          <TabPanel>
-            <p>two!</p>
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
-      <Footer />
-    </VStack>
+    <Layout
+      title="Home"
+      heading={`Bonjour, ${session?.user?.name?.split(' ')[0]} 👋`}
+      subheading="Here's new for you this week...">
+      <Grid
+        textAlign="initial"
+        templateColumns={['repeat(1, 1fr)', null, null, 'repeat(2, 1fr)']}
+        gap={4}>
+        <Paper />
+        <Paper />
+        <Paper />
+      </Grid>
+    </Layout>
   )
 }

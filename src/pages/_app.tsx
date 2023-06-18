@@ -11,11 +11,14 @@ import { wrapper } from '@/store/store'
 
 import { SessionProvider } from 'next-auth/react'
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
 export default function MyApp({ Component, ...appProps }: AppProps) {
   const { store, props } = wrapper.useWrappedStore(appProps)
   const {
     pageProps: { session, ...pageProps }
   } = props
+  const queryClient = new QueryClient()
 
   return (
     <>
@@ -30,7 +33,9 @@ export default function MyApp({ Component, ...appProps }: AppProps) {
       <ChakraProvider theme={theme}>
         <SessionProvider session={session}>
           <Provider store={store}>
-            <Component {...pageProps} />
+            <QueryClientProvider client={queryClient}>
+              <Component {...pageProps} />
+            </QueryClientProvider>
           </Provider>
         </SessionProvider>
       </ChakraProvider>

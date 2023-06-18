@@ -1,0 +1,149 @@
+import Layout from '@/components/core/Layout'
+import Year from '@/components/preferences/Year'
+import Publisher from '@/components/preferences/Publisher'
+import Topics from '@/components/preferences/Topics'
+import { useQuery } from '@tanstack/react-query'
+import { Button, Skeleton, Stack, VStack } from '@chakra-ui/react'
+
+import { GetServerSidePropsContext } from 'next'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '../api/auth/[...nextauth]'
+import Loading from '@/components/auth/Loading'
+import { useSession } from 'next-auth/react'
+import Preference from '@/types/preference'
+import Publication from '@/types/publication'
+import Error from '@/components/core/Error'
+
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  getPref,
+  setMaxYear,
+  setMinYear,
+  setPubs,
+  setTopics
+} from '@/store/slices/preferences'
+
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+  const session = await getServerSession(ctx.req, ctx.res, authOptions)
+
+  if (!session)
+    return {
+      redirect: {
+        destination: '/auth/login'
+      },
+      props: {}
+    }
+  return {
+    props: {}
+  }
+}
+
+export default function Preferences() {
+  const { status } = useSession()
+  const [isSaving, setIsSaving] = useState(false)
+  const { topics, minYear, maxYear, pubIds } = useSelector(getPref)
+  const { isLoading, isError, data, error } = useQuery({
+    queryKey: ['preferences'],
+    queryFn: async (): Promise<{
+      preferences: Preference
+      publishers: Publication[]
+    }> => {
+      const res = await Promise.all([
+        fetch('/api/preferences'),
+        fetch('/api/publishers')
+      ])
+      return {
+        preferences: await res[0].json(),
+        publishers: await res[1].json()
+      }
+    }
+  })
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (!isLoading && !isError) {
+      console.log(data)
+      const { topics, minYear, maxYear, pubIds } = data.preferences
+      console.log(data)
+      dispatch(setTopics([...topics]))
+      dispatch(setMinYear(minYear))
+      dispatch(setMaxYear(maxYear))
+      dispatch(setPubs([...pubIds]))
+    }
+  }, [data])
+
+  if (status === 'loading') return <Loading />
+
+  if (isError) {
+    //@ts-ignore
+    return <Error name={error.name} message={error.message} />
+  }
+
+  return (
+    <Layout
+      title="Preferences"
+      heading="Preferences"
+      subheading="Here's what you are interested in...">
+      <Stack
+        direction={['column', null, null, 'row']}
+        w="full"
+        spacing={[2, null, null, 4]}>
+        <VStack w={['full', null, null, '67%']}>
+          {!isLoading ? (
+            <Topics />
+          ) : (
+            <>
+              <Skeleton w="full" h={20} />
+              <Skeleton w="full" h="full" />
+              <Skeleton w="full" h="full" />
+            </>
+          )}
+        </VStack>
+        <Stack
+          w={['full', null, null, '33%']}
+          direction={['column', null, 'row', 'column']}>
+          {!isLoading ? (
+            <Publisher
+              myPublishers={data.preferences.pubIds}
+              publishers={data.publishers}
+            />
+          ) : (
+            <Skeleton w="full" h={40} />
+          )}
+          {!isLoading ? (
+            <Year
+              min={data.preferences.minYear}
+              max={data.preferences.maxYear}
+            />
+          ) : (
+            <Skeleton w="full" h={40} />
+          )}
+        </Stack>
+      </Stack>
+      <Button
+        mt={4}
+        bg="light.button"
+        color="light.buttontext"
+        colorScheme="twitter"
+        size="md"
+        isDisabled={isSaving}
+        isLoading={isSaving}
+        onClick={async () => {
+          try {
+            setIsSaving(true)
+            const res = await fetch('/api/preferences', {
+              method: 'POST',
+              body: JSON.stringify({ topics, minYear, maxYear, pubIds })
+            })
+          } catch (e) {
+          } finally {
+            setIsSaving(false)
+          }
+        }}>
+        Save changes
+      </Button>
+    </Layout>
+  )
+}

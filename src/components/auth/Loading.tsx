@@ -1,5 +1,5 @@
 import { Center, Spinner } from '@chakra-ui/react'
-import Head from '../Head'
+import Head from '../core/Head'
 
 export default function Loading() {
   return (
