@@ -49,7 +49,7 @@ export default function Landing() {
               color="light.buttontext"
               colorScheme="twitter"
               size="lg">
-              Check it out
+              Early access
             </Button>
           </Link>
           {/* <Button
@@ -76,7 +76,7 @@ export default function Landing() {
               right="-125px"
               top="-15px"
               transform="rotate(10deg)">
-              In beta preview
+              In alpha testing
             </Text>
           </Box>
         </VStack>
