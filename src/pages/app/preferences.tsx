@@ -3,7 +3,14 @@ import Year from '@/components/preferences/Year'
 import Publisher from '@/components/preferences/Publisher'
 import Topics from '@/components/preferences/Topics'
 import { useQuery } from '@tanstack/react-query'
-import { Button, LightMode, Skeleton, Stack, VStack } from '@chakra-ui/react'
+import {
+  Button,
+  LightMode,
+  Skeleton,
+  Stack,
+  VStack,
+  useToast
+} from '@chakra-ui/react'
 
 import { GetServerSidePropsContext } from 'next'
 import { getServerSession } from 'next-auth'
@@ -61,6 +68,7 @@ export default function Preferences() {
   })
 
   const dispatch = useDispatch()
+  const toast = useToast()
 
   useEffect(() => {
     if (!isLoading && !isError) {
@@ -141,7 +149,23 @@ export default function Preferences() {
               method: 'PUT',
               body: JSON.stringify({ topics, minYear, maxYear, pubIds })
             })
+            toast({
+              title: 'Success',
+              description: 'Preferences saved successfully',
+              status: 'success',
+              duration: 5000,
+              isClosable: true
+            })
           } catch (e) {
+            toast({
+              //@ts-ignore
+              title: e.name,
+              //@ts-ignore
+              description: e.message,
+              status: 'error',
+              duration: 5000,
+              isClosable: true
+            })
           } finally {
             setIsSaving(false)
           }
