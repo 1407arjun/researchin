@@ -1,24 +1,11 @@
-import {
-  Tag,
-  TagLabel,
-  TagLeftIcon,
-  TagRightIcon,
-  TagCloseButton,
-  Box,
-  IconButton
-} from '@chakra-ui/react'
+import { Tag, TagLabel, Box, IconButton, Text } from '@chakra-ui/react'
 import { Heading, Flex, Input } from '@chakra-ui/react'
 import { MdAdd, MdClose } from 'react-icons/md'
 
-import {
-  addTopic,
-  getPref,
-  removeTopic,
-  setTopics
-} from '@/store/slices/preferences'
+import { addTopic, getPref, removeTopic } from '@/store/slices/preferences'
 import { useDispatch, useSelector } from 'react-redux'
 import Card from './Card'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 const masterTopics = [
   'Blockchain',
@@ -97,16 +84,24 @@ export default function Topics() {
         mb={2}
       />
       <Box w="full" mb={2}>
-        <Topicbar
-          topics={
-            search.trim() !== ''
-              ? topics
-                  .filter((t) => t.toLowerCase().includes(search.toLowerCase()))
-                  .sort()
-              : [...topics].sort()
-          }
-          me
-        />
+        {topics.length > 0 ? (
+          <Topicbar
+            topics={
+              search.trim() !== ''
+                ? topics
+                    .filter((t) =>
+                      t.toLowerCase().includes(search.toLowerCase())
+                    )
+                    .sort()
+                : [...topics].sort()
+            }
+            me
+          />
+        ) : (
+          <Text fontSize="md" color="light.cardtext" fontWeight="medium">
+            Nothing here :(
+          </Text>
+        )}
       </Box>
       <Box w="full">
         <Heading size="sm" color="light.bg" mb={3}>

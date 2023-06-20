@@ -1,4 +1,5 @@
 import PaperType from '@/types/paper'
+import { Link } from '@chakra-ui/next-js'
 import {
   Flex,
   HStack,
@@ -25,7 +26,15 @@ const Tag = ({ label }: { label: string }) => {
   )
 }
 
-const Info = ({ display }: { display: (string | null)[] }) => {
+const Info = ({
+  display,
+  pub,
+  date
+}: {
+  display: (string | null)[]
+  pub: string
+  date: string
+}) => {
   return (
     <Stack
       direction={['row', null, 'column']}
@@ -33,7 +42,7 @@ const Info = ({ display }: { display: (string | null)[] }) => {
       alignSelf="start"
       align={['center', null, 'end']}>
       <Text fontSize={['md', null, 'lg']} fontWeight="bold" color="dark.button">
-        IEEE
+        {pub}
       </Text>
       <ChakraTag
         size={['sm', null, 'md']}
@@ -44,15 +53,18 @@ const Info = ({ display }: { display: (string | null)[] }) => {
         fontWeight="semibold"
         mb={[2, null, 'inherit']}>
         <TagLeftIcon as={MdDateRange} />
-        <TagLabel>19/2929</TagLabel>
+        <TagLabel>{date}</TagLabel>
       </ChakraTag>
     </Stack>
   )
 }
 
-export default function Paper() {
+export default function Paper({ paper }: { paper: PaperType }) {
   return (
     <VStack
+      as={Link}
+      href={paper.url}
+      target="_blank"
       rounded="md"
       bg="light.card"
       p={4}
@@ -61,28 +73,34 @@ export default function Paper() {
       spacing={0}
       _hover={{ transform: 'scale(1.02)', shadow: 'xl' }}
       cursor="pointer">
-      <Info display={['inherit', null, 'none']} />
+      <Info
+        display={['inherit', null, 'none']}
+        pub={paper.pub.name}
+        date={paper.date}
+      />
       <HStack w="full" spacing={4}>
         <VStack align="start" spacing={1}>
           <Heading size="md" color="light.bg">
-            Sports Highlights Generation using Decomposed Audio Information
+            {paper.title}
           </Heading>
           <Text fontSize="sm" fontWeight="medium" color="light.cardtext">
-            Muhammad Rafiqul Islam; et al.
+            {paper.authors.join(', ')}
           </Text>
           <Text fontSize="xs" fontWeight="medium" color="light.cardtext">
-            2019 IEEE International Conference on Multimedia & Expo Workshops
-            (ICMEW)
+            {paper.conf}
           </Text>
         </VStack>
         <Spacer display={['none', null, 'inherit']} />
-        <Info display={['none', null, 'inherit']} />
+        <Info
+          display={['none', null, 'inherit']}
+          pub={paper.pub.name}
+          date={paper.date}
+        />
       </HStack>
       <Flex wrap="wrap" gap={2} mt={4}>
-        <Tag label="Hello" />
-        <Tag label="Hello" />
-        <Tag label="Hello" />
-        <Tag label="Hello" />
+        {paper.topics.map((t) => (
+          <Tag key={t} label={t} />
+        ))}
       </Flex>
     </VStack>
   )
