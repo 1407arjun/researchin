@@ -1,7 +1,6 @@
 import Footer from '@/components/core/Footer'
 import Head from '@/components/core/Head'
-import Namebar from '@/components/core/Namebar'
-import MyAdapter from '@/lib/adapter'
+import Navbar from '@/components/core/Navbar'
 import { Link } from '@chakra-ui/next-js'
 import {
   Box,
@@ -12,22 +11,21 @@ import {
   Icon,
   createIcon
 } from '@chakra-ui/react'
-import mongoose from 'mongoose'
 import { Caveat } from 'next/font/google'
 
 const caveat = Caveat({ subsets: ['latin'] })
 
 export default function Landing() {
   return (
-    <VStack bg="light.bg" align="center" minH="100vh">
-      <Namebar type="light" />
+    <VStack bg="light.bg" align="center" minH="100vh" px={[8, null, 12]}>
+      <Navbar type="light" />
       <Head title="Researchin" />
       <VStack
         flex={1}
         justify="center"
         textAlign="center"
         spacing={[8, null, 12]}
-        p={8}
+        py={8}
         maxW="3xl">
         <Heading
           size="3xl"
@@ -45,22 +43,22 @@ export default function Landing() {
           interests.
         </Text>
         <VStack align="center" alignSelf="center" position="relative">
-          <Button
-            as={Link}
-            href="/auth/login"
-            bg="light.button"
-            color="light.buttontext"
-            colorScheme="twitter"
-            size="lg">
-            Get Started
-          </Button>
-          <Button
+          <Link href="/auth/login" _hover={{ textDecor: 'none' }}>
+            <Button
+              bg="light.button"
+              color="light.buttontext"
+              colorScheme="twitter"
+              size="lg">
+              Check it out
+            </Button>
+          </Link>
+          {/* <Button
             variant="link"
             color="light.headline"
             colorScheme="blue"
             size="sm">
             Learn more
-          </Button>
+          </Button> */}
           <Box>
             <Icon
               as={Arrow}
@@ -78,7 +76,7 @@ export default function Landing() {
               right="-125px"
               top="-15px"
               transform="rotate(10deg)">
-              Coming soon
+              In beta preview
             </Text>
           </Box>
         </VStack>

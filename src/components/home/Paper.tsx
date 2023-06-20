@@ -61,47 +61,46 @@ const Info = ({
 
 export default function Paper({ paper }: { paper: PaperType }) {
   return (
-    <VStack
-      as={Link}
-      href={paper.url}
-      target="_blank"
-      rounded="md"
-      bg="light.card"
-      p={4}
-      w="full"
-      align="start"
-      spacing={0}
-      _hover={{ transform: 'scale(1.02)', shadow: 'xl' }}
-      cursor="pointer">
-      <Info
-        display={['inherit', null, 'none']}
-        pub={paper.pub.name}
-        date={paper.date}
-      />
-      <HStack w="full" spacing={4}>
-        <VStack align="start" spacing={1}>
-          <Heading size="md" color="light.bg">
-            {paper.title}
-          </Heading>
-          <Text fontSize="sm" fontWeight="medium" color="light.cardtext">
-            {paper.authors.join(', ')}
-          </Text>
-          <Text fontSize="xs" fontWeight="medium" color="light.cardtext">
-            {paper.conf}
-          </Text>
-        </VStack>
-        <Spacer display={['none', null, 'inherit']} />
+    <Link href={paper.url} target="_blank" _hover={{ textDecor: 'none' }}>
+      <VStack
+        rounded="md"
+        bg="light.card"
+        p={4}
+        w="full"
+        align="start"
+        spacing={0}
+        _hover={{ transform: 'scale(1.02)', shadow: 'xl' }}
+        cursor="pointer">
         <Info
-          display={['none', null, 'inherit']}
+          display={['inherit', null, 'none']}
           pub={paper.pub.name}
           date={paper.date}
         />
-      </HStack>
-      <Flex wrap="wrap" gap={2} mt={4}>
-        {paper.topics.map((t) => (
-          <Tag key={t} label={t} />
-        ))}
-      </Flex>
-    </VStack>
+        <HStack w="full" spacing={4}>
+          <VStack align="start" spacing={1}>
+            <Heading size="md" color="light.bg">
+              {paper.title}
+            </Heading>
+            <Text fontSize="sm" fontWeight="medium" color="light.cardtext">
+              {paper.authors.join(', ')}
+            </Text>
+            <Text fontSize="xs" fontWeight="medium" color="light.cardtext">
+              {paper.conf}
+            </Text>
+          </VStack>
+          <Spacer display={['none', null, 'inherit']} />
+          <Info
+            display={['none', null, 'inherit']}
+            pub={paper.pub.name}
+            date={paper.date}
+          />
+        </HStack>
+        <Flex wrap="wrap" gap={2} mt={4}>
+          {paper.topics.map((t) => (
+            <Tag key={t} label={t} />
+          ))}
+        </Flex>
+      </VStack>
+    </Link>
   )
 }

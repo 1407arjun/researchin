@@ -1,15 +1,7 @@
-import Namebar from '@/components/core/Namebar'
+import Navbar from '@/components/core/Navbar'
 import Head from '@/components/core/Head'
 import SocialButton from '@/components/auth/SocialButton'
-import {
-  Center,
-  Box,
-  Stack,
-  Link,
-  Text,
-  VStack,
-  Heading
-} from '@chakra-ui/react'
+import { Center, Box, Stack, Text, VStack, Heading } from '@chakra-ui/react'
 import { FaFacebook } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
 import Footer from '@/components/core/Footer'
@@ -44,7 +36,7 @@ export default function Login() {
     <Center bg="dark.bg" minH="100vh">
       <VStack align="center" spacing={[8, null, 12]} p={8} maxW="xl" w="full">
         <Box>
-          <Namebar headline />
+          <Navbar headline />
           <Head title="Login" />
           <Heading
             size="lg"

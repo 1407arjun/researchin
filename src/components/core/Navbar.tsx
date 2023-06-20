@@ -175,36 +175,63 @@ const Searchbar = ({ display }: { display: (string | null)[] }) => {
   )
 }
 
-export default function Navbar({ type }: { type?: 'light' | 'dark' }) {
-  const { data: session } = useSession()
+export default function Navbar({
+  headline,
+  type
+}: {
+  headline?: boolean
+  type?: 'light' | 'dark'
+}) {
+  const { data: session, status } = useSession()
 
   if (!type) type = 'dark'
 
   return (
-    <HStack py={2} justify="center" w="full">
-      <Image w={10} src={Logo} alt="Researchin Logo" />
+    <HStack py={4} justify="center" w="full">
+      <Link href="/">
+        <Image w={10} src={Logo} alt="Researchin Logo" />
+      </Link>
       <Heading
-        size="md"
+        as={Link}
+        href="/"
+        _hover={{ textDecor: 'none' }}
+        size="lg"
         color="light.headline"
         display={['none', null, 'inherit']}>
         Researchin
       </Heading>
-      <Spacer />
-      {menuItems.map((i) => (
-        <Link
-          key={i.title}
-          display={['none', 'inherit']}
-          flexShrink={0}
-          mr={4}
-          href={i.href}
-          fontSize="md"
-          color="light.headline"
-          _hover={{ color: 'light.button' }}
-          fontWeight="semibold">
-          {i.title}
-        </Link>
-      ))}
-      <AvatarMenu user={session?.user!} />)
+      {!headline && <Spacer display={['none', null, 'inherit']} />}
+      {!headline &&
+        (status === 'authenticated' ? (
+          <>
+            {menuItems.map((i) => (
+              <Link
+                key={i.title}
+                display={['none', 'inherit']}
+                flexShrink={0}
+                mr={4}
+                href={i.href}
+                fontSize="md"
+                color="light.headline"
+                _hover={{ color: 'light.button' }}
+                fontWeight="semibold">
+                {i.title}
+              </Link>
+            ))}
+            <AvatarMenu user={session?.user!} />)
+          </>
+        ) : (
+          <Link href="/auth/login" _hover={{ textDecor: 'none' }}>
+            <Button
+              variant="outline"
+              display={['none', null, 'inherit']}
+              borderColor={`${type}.button`}
+              color={`${type}.button`}
+              colorScheme={type === 'dark' ? 'red' : 'twitter'}>
+              Login
+            </Button>
+          </Link>
+        ))}
     </HStack>
   )
 }
