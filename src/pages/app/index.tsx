@@ -26,7 +26,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 export default function Home() {
   const { data: session, status } = useSession()
 
-  if (status === 'loading') return <Loading />
+  if (status === 'loading' || status === 'unauthenticated') return <Loading />
 
   return (
     <Layout

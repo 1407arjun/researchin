@@ -3,7 +3,7 @@ import Year from '@/components/preferences/Year'
 import Publisher from '@/components/preferences/Publisher'
 import Topics from '@/components/preferences/Topics'
 import { useQuery } from '@tanstack/react-query'
-import { Button, Skeleton, Stack, VStack } from '@chakra-ui/react'
+import { Button, LightMode, Skeleton, Stack, VStack } from '@chakra-ui/react'
 
 import { GetServerSidePropsContext } from 'next'
 import { getServerSession } from 'next-auth'
@@ -74,7 +74,7 @@ export default function Preferences() {
     }
   }, [data])
 
-  if (status === 'loading') return <Loading />
+  if (status === 'loading' || status === 'unauthenticated') return <Loading />
 
   if (isError) {
     //@ts-ignore
@@ -94,11 +94,11 @@ export default function Preferences() {
           {!isLoading ? (
             <Topics />
           ) : (
-            <>
+            <LightMode>
               <Skeleton w="full" h={20} />
               <Skeleton w="full" h="full" />
               <Skeleton w="full" h="full" />
-            </>
+            </LightMode>
           )}
         </VStack>
         <Stack
@@ -110,7 +110,9 @@ export default function Preferences() {
               publishers={data.publishers}
             />
           ) : (
-            <Skeleton w="full" h={40} />
+            <LightMode>
+              <Skeleton w="full" h={40} />
+            </LightMode>
           )}
           {!isLoading ? (
             <Year
@@ -118,7 +120,9 @@ export default function Preferences() {
               max={data.preferences.maxYear}
             />
           ) : (
-            <Skeleton w="full" h={40} />
+            <LightMode>
+              <Skeleton w="full" h={40} />
+            </LightMode>
           )}
         </Stack>
       </Stack>
