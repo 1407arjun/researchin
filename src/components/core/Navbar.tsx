@@ -1,5 +1,13 @@
 import { Image, Link } from '@chakra-ui/next-js'
-import { HStack, Spacer, Avatar, Text, Box } from '@chakra-ui/react'
+import {
+  HStack,
+  Spacer,
+  Avatar,
+  Text,
+  Box,
+  Heading,
+  Button
+} from '@chakra-ui/react'
 import {
   Menu,
   MenuButton,
@@ -8,12 +16,23 @@ import {
   MenuItem,
   MenuDivider
 } from '@chakra-ui/react'
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  AlertDialogCloseButton,
+  useDisclosure
+} from '@chakra-ui/react'
 import { InputGroup, InputLeftElement, Input } from '@chakra-ui/react'
 import Logo from '@/assets/images/logo.svg'
 import { FaSearch } from 'react-icons/fa'
 
 import { signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
+import { useState, useRef, useEffect } from 'react'
 
 const menuItems = [
   { title: 'Dashboard', href: '/app' },
@@ -26,6 +45,13 @@ const AvatarMenu = ({
   user: { name?: string | null; image?: string | null; email?: string | null }
 }) => {
   const router = useRouter()
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const cancelRef = useRef()
+  const [isDeleting, setIsDeleting] = useState(false)
+
+  useEffect(() => {
+    if (!isOpen) setIsDeleting(false)
+  }, [isOpen])
 
   return (
     <Menu>
@@ -43,19 +69,85 @@ const AvatarMenu = ({
           </Text>
         </MenuGroup>
         <MenuDivider display={['inherit', 'none']} />
-        <MenuGroup title="App" display={['inherit', 'none']}>
+        <MenuGroup title="App" display={['inherit', 'none']} ml={3}>
           {menuItems.map((i) => (
             <MenuItem
               key={i.title}
               display={['inherit', 'none']}
+              bg="light.bg"
+              _hover={{ bg: 'dark.bg' }}
               onClick={() => router.push(i.href)}>
               {i.title}
             </MenuItem>
           ))}
         </MenuGroup>
-        <MenuDivider />
-        <MenuItem onClick={() => signOut({ callbackUrl: '/' })}>
+        <MenuDivider borderColor="light.paragraph" />
+        <MenuItem
+          onClick={() => signOut({ callbackUrl: '/' })}
+          bg="light.bg"
+          _hover={{ bg: 'dark.bg' }}>
           Logout
+        </MenuItem>
+        <MenuItem
+          onClick={onOpen}
+          color="dark.button"
+          bg="light.bg"
+          _hover={{ bg: 'dark.bg' }}>
+          Delete Account
+          <AlertDialog
+            isOpen={isOpen}
+            //@ts-ignore
+            leastDestructiveRef={cancelRef}
+            onClose={onClose}>
+            <AlertDialogOverlay>
+              <AlertDialogContent bg="light.bg">
+                <AlertDialogHeader
+                  fontSize="lg"
+                  fontWeight="bold"
+                  color="light.headline">
+                  Delete Account
+                </AlertDialogHeader>
+
+                <AlertDialogBody color="light.paragraph">
+                  Are you sure? You can&apos;t undo this action afterwards.
+                </AlertDialogBody>
+
+                <AlertDialogFooter>
+                  <Button
+                    //@ts-ignore
+                    ref={cancelRef}
+                    onClick={onClose}
+                    colorScheme="twitter"
+                    bg="light.button"
+                    color="light.buttontext">
+                    Cancel
+                  </Button>
+                  <Button
+                    isLoading={isDeleting}
+                    isDisabled={isDeleting}
+                    bg="dark.button"
+                    color="dark.buttontext"
+                    colorScheme="red"
+                    onClick={async () => {
+                      try {
+                        setIsDeleting(true)
+                        const res = await fetch('/api/delete', {
+                          method: 'DELETE'
+                        })
+                      } catch (e) {
+                      } finally {
+                        setIsDeleting(false)
+                        onClose()
+                        signOut({ callbackUrl: '/' })
+                      }
+                    }}
+                    ml={3}>
+                    Delete
+                  </Button>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialogOverlay>
+          </AlertDialog>
         </MenuItem>
       </MenuList>
     </Menu>
@@ -89,28 +181,30 @@ export default function Navbar({ type }: { type?: 'light' | 'dark' }) {
   if (!type) type = 'dark'
 
   return (
-    <>
-      <HStack py={2} justify="center" w="full">
-        <Image w={10} src={Logo} alt="Researchin Logo" />
-        <Searchbar display={['none', null, 'inherit']} />
-        <Spacer />
-        {menuItems.map((i) => (
-          <Link
-            key={i.title}
-            display={['none', 'inherit']}
-            flexShrink={0}
-            mr={4}
-            href={i.href}
-            fontSize="md"
-            color="light.headline"
-            _hover={{ color: 'light.button' }}
-            fontWeight="semibold">
-            {i.title}
-          </Link>
-        ))}
-        <AvatarMenu user={session?.user!} />)
-      </HStack>
-      <Searchbar display={['inherit', null, 'none']} />
-    </>
+    <HStack py={2} justify="center" w="full">
+      <Image w={10} src={Logo} alt="Researchin Logo" />
+      <Heading
+        size="md"
+        color="light.headline"
+        display={['none', null, 'inherit']}>
+        Researchin
+      </Heading>
+      <Spacer />
+      {menuItems.map((i) => (
+        <Link
+          key={i.title}
+          display={['none', 'inherit']}
+          flexShrink={0}
+          mr={4}
+          href={i.href}
+          fontSize="md"
+          color="light.headline"
+          _hover={{ color: 'light.button' }}
+          fontWeight="semibold">
+          {i.title}
+        </Link>
+      ))}
+      <AvatarMenu user={session?.user!} />)
+    </HStack>
   )
 }

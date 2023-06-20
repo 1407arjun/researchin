@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 import User from '@/models/User'
 import Account from '@/models/Account'
 import Session from '@/models/Session'
+import Preference from '@/models/Preference'
 
 export default function MongooseAdapter(
   client: Promise<typeof mongoose>
@@ -38,6 +39,7 @@ export default function MongooseAdapter(
     async deleteUser(userId) {
       await client
       await Promise.all([
+        Preference.deleteOne({ userId: userId }),
         Account.deleteMany({ userId: userId }),
         Session.deleteMany({ userId: userId }),
         User.deleteOne({ id: userId })
