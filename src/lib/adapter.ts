@@ -42,7 +42,7 @@ export default function MongooseAdapter(
         Preference.deleteOne({ userId: userId }),
         Account.deleteMany({ userId: userId }),
         Session.deleteMany({ userId: userId }),
-        User.deleteOne({ id: userId })
+        User.deleteOne({ _id: userId })
       ])
     },
     async linkAccount(account) {

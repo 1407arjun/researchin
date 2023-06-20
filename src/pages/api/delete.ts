@@ -21,9 +21,8 @@ export default async function getPreferences(
         Preference.deleteOne({ userId: session.user.id }),
         Account.deleteMany({ userId: session.user.id }),
         Session.deleteMany({ userId: session.user.id }),
-        User.deleteOne({ id: session.user.id })
+        User.deleteOne({ _id: session.user.id })
       ])
-      //.populate('pubs')
       res.send(acks)
     }
   } else return res.status(401).end()
