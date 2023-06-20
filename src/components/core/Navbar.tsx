@@ -218,7 +218,7 @@ export default function Navbar({
                 {i.title}
               </Link>
             ))}
-            <AvatarMenu user={session?.user!} />)
+            <AvatarMenu user={session?.user!} />
           </>
         ) : (
           <Link href="/auth/login" _hover={{ textDecor: 'none' }}>
