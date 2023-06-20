@@ -1,6 +1,7 @@
 import { getServerSession } from 'next-auth'
 import { authOptions } from './auth/[...nextauth]'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { headers } from 'next/headers'
 
 import Account from '@/models/Account'
 import Session from '@/models/Session'
@@ -8,13 +9,14 @@ import User from '@/models/User'
 import clientPromise from '@/lib/mongodb'
 import Preference from '@/models/Preference'
 
-export default async function getPreferences(
+export default async function deleteUserAndAccount(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const session = await getServerSession(req, res, authOptions)
+  const authorization = req.headers['x-client-authorization']
 
-  if (session) {
+  if (session && authorization && session.user.id === authorization) {
     if (req.method === 'DELETE') {
       await clientPromise
       const acks = await Promise.all([

@@ -47,34 +47,41 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 }
 
 export default function Preferences() {
-  const { status } = useSession()
+  const { data: session, status } = useSession()
   const [isSaving, setIsSaving] = useState(false)
   const { topics, minYear, maxYear, pubIds } = useSelector(getPref)
-  const { isLoading, isError, data, error } = useQuery({
-    queryKey: ['preferences'],
-    queryFn: async (): Promise<{
+  const { isLoading, isError, data, error } = useQuery(
+    ['preferences'],
+    async (): Promise<{
       preferences: Preference
       publishers: Publication[]
     }> => {
+      const headers = new Headers()
+      headers.append('x-client-authorization', session?.user.id!)
       const res = await Promise.all([
-        fetch('/api/preferences'),
-        fetch('/api/publishers')
+        fetch('/api/preferences', {
+          method: 'GET',
+          headers
+        }),
+        fetch('/api/publishers', {
+          method: 'GET',
+          headers
+        })
       ])
       return {
         preferences: await res[0].json(),
         publishers: await res[1].json()
       }
-    }
-  })
+    },
+    { enabled: status === 'authenticated' }
+  )
 
   const dispatch = useDispatch()
   const toast = useToast()
 
   useEffect(() => {
     if (!isLoading && !isError) {
-      console.log(data)
       const { topics, minYear, maxYear, pubIds } = data.preferences
-      console.log(data)
       dispatch(setTopics([...topics]))
       dispatch(setMinYear(minYear))
       dispatch(setMaxYear(maxYear))
@@ -145,8 +152,11 @@ export default function Preferences() {
         onClick={async () => {
           try {
             setIsSaving(true)
+            const headers = new Headers()
+            headers.append('x-client-authorization', session?.user.id!)
             const res = await fetch('/api/preferences', {
               method: 'PUT',
+              headers,
               body: JSON.stringify({ topics, minYear, maxYear, pubIds })
             })
             toast({

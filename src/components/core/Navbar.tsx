@@ -33,6 +33,7 @@ import { FaSearch } from 'react-icons/fa'
 import { signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useState, useRef, useEffect } from 'react'
+import { headers } from 'next/dist/client/components/headers'
 
 const menuItems = [
   { title: 'Dashboard', href: '/app' },
@@ -44,6 +45,7 @@ const AvatarMenu = ({
 }: {
   user: { name?: string | null; image?: string | null; email?: string | null }
 }) => {
+  const { data: session } = useSession()
   const router = useRouter()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const cancelRef = useRef()
@@ -131,8 +133,14 @@ const AvatarMenu = ({
                     onClick={async () => {
                       try {
                         setIsDeleting(true)
+                        const headers = new Headers()
+                        headers.append(
+                          'x-client-authorization',
+                          session?.user.id!
+                        )
                         const res = await fetch('/api/delete', {
-                          method: 'DELETE'
+                          method: 'DELETE',
+                          headers
                         })
                       } catch (e) {
                       } finally {
