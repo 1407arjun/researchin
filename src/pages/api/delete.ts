@@ -1,7 +1,6 @@
 import { getServerSession } from 'next-auth'
 import { authOptions } from './auth/[...nextauth]'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { headers } from 'next/headers'
 
 import Account from '@/models/Account'
 import Session from '@/models/Session'
@@ -26,6 +25,6 @@ export default async function deleteUserAndAccount(
         User.deleteOne({ _id: session.user.id })
       ])
       res.send(acks)
-    }
+    } else return res.status(405).end()
   } else return res.status(401).end()
 }
