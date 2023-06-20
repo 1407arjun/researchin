@@ -25,6 +25,6 @@ export default async function deleteUserAndAccount(
         User.deleteOne({ _id: session.user.id })
       ])
       res.send(acks)
-    } else return res.status(405).end()
-  } else return res.status(401).end()
+    } else return res.status(405).redirect('/')
+  } else return res.status(401).redirect('/')
 }

@@ -27,6 +27,6 @@ export default async function getPreferences(
         { $set: JSON.parse(req.body) }
       )
       res.send(prefs)
-    } else return res.status(405).end()
-  } else return res.status(401).end()
+    } else return res.status(405).redirect('/')
+  } else return res.status(401).redirect('/')
 }

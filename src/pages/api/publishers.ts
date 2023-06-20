@@ -17,6 +17,6 @@ export default async function getPublishers(
       await clientPromise
       const pubs = await Publication.find().sort({ name: 1 })
       res.send(pubs)
-    } else return res.status(405).end()
-  } else return res.status(401).end()
+    } else return res.status(405).redirect('/')
+  } else return res.status(401).redirect('/')
 }
