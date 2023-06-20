@@ -39,6 +39,8 @@ const Topicbar = ({ topics, me }: { topics: string[]; me?: boolean }) => {
           key={t}
           borderRadius="full"
           variant="solid"
+          bg="light.button"
+          color="light.buttontext"
           colorScheme="twitter">
           <TagLabel>{t}</TagLabel>
           {me && (

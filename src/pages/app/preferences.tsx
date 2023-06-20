@@ -134,7 +134,7 @@ export default function Preferences() {
           try {
             setIsSaving(true)
             const res = await fetch('/api/preferences', {
-              method: 'POST',
+              method: 'PUT',
               body: JSON.stringify({ topics, minYear, maxYear, pubIds })
             })
           } catch (e) {
